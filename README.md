@@ -45,16 +45,20 @@ The shortcode renders the time in `YYYY-MM-DD HH:MM` format in the reader's loca
 | MDT | -06:00 |
 | PST | -08:00 |
 | PDT | -07:00 |
+| BST | +01:00 |
 | CET | +01:00 |
 | CEST | +02:00 |
-| BST | +01:00 |
 | JST | +09:00 |
 | AEST | +10:00 |
 | AEDT | +11:00 |
 | NZST | +12:00 |
 | NZDT | +13:00 |
 
-**Offset formats:**
+Also supported: `WET`, `WEST`, `IST`, `EET`, `EEST`, `MSK`, `GST`, `PKT`, `ICT`, `WIB`, `HKT`, `SGT`, `KST`, `ACST`, `AST`, `ADT`, `NST`, `NDT`, `AKST`, `AKDT`, `HST`, `HDT`.
+
+For timezones not in either list (e.g. India Standard Time +05:30, Bangladesh +06:00), use an offset directly.
+
+**Offset formats** (any timezone):
 
 - `+05:30`, `-08:00`
 - `+0530`, `-0800`
