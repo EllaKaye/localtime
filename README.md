@@ -5,7 +5,7 @@ A Quarto shortcode extension for displaying times in the reader's local timezone
 ## Installation
 
 ```bash
-quarto add ellakaye/localtime
+quarto add EllaKaye/localtime
 ```
 
 ## Usage
@@ -27,6 +27,8 @@ Where:
 | `{{< localtime 2026-01-30 13:00 EST >}}` | `2026-01-30 18:00` (UTC), `2026-01-30 19:00` (CET), `2026-01-30 13:00` (EST) |
 | `{{< localtime 2026-01-30 09:00 CET >}}` | `2026-01-30 08:00` (UTC), `2026-01-30 03:00` (EST), `2026-01-30 17:00` (JST) |
 | `{{< localtime 2026-01-30 13:00 +05:30 >}}` | `2026-01-30 07:30` (UTC), `2026-01-30 08:30` (CET), `2026-01-30 02:30` (EST) |
+
+The timezone argument describes where the *input* time is, not an offset to apply to it. For example, `{{< localtime 2026-01-30 13:00 EST >}}` means "this event is at 13:00 Eastern time" — so a reader in UTC (UK) sees `2026-01-30 18:00`, because EST is 5 hours behind UTC. Equivalently, `{{< localtime 2026-01-30 13:00 -05:00 >}}` produces the same result.
 
 The shortcode renders the time in `YYYY-MM-DD HH:MM` format in the reader's local timezone, using JavaScript. If JavaScript is disabled, the original time and timezone are shown as a fallback.
 

@@ -8,7 +8,7 @@ The "Renders as" column below updates to your local time when the page loads.
 
 ## Examples
 
-| Shortcode | Renders as |
+| Shortcode | Renders locally as |
 |---|---|
 | `{{</* localtime 2026-01-30 13:00 UTC */>}}` | {{< localtime 2026-01-30 13:00 UTC >}} |
 | `{{</* localtime 2026-01-30 13:00 EST */>}}` | {{< localtime 2026-01-30 13:00 EST >}} |
