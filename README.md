@@ -37,26 +37,25 @@ The shortcode renders the time in `YYYY-MM-DD HH:MM` format in the reader's loca
 | Abbreviation | Offset |
 |---|---|
 | UTC, GMT | +00:00 |
-| EST | -05:00 |
-| EDT | -04:00 |
-| CST | -06:00 |
-| CDT | -05:00 |
-| MST | -07:00 |
-| MDT | -06:00 |
-| PST | -08:00 |
-| PDT | -07:00 |
+| NST / NDT | -03:30 / -02:30 |
+| AST / ADT | -04:00 / -03:00 |
+| EST / EDT | -05:00 / -04:00 |
+| CST / CDT | -06:00 / -05:00 |
+| MST / MDT | -07:00 / -06:00 |
+| PST / PDT | -08:00 / -07:00 |
+| AKST / AKDT | -09:00 / -08:00 |
+| HST / HDT | -10:00 / -09:00 |
 | BST | +01:00 |
-| CET | +01:00 |
-| CEST | +02:00 |
+| CET / CEST | +01:00 / +02:00 |
+| EET / EEST | +02:00 / +03:00 |
+| IST | +05:30 |
 | JST | +09:00 |
-| AEST | +10:00 |
-| AEDT | +11:00 |
-| NZST | +12:00 |
-| NZDT | +13:00 |
+| AEST / AEDT | +10:00 / +11:00 |
+| NZST / NZDT | +12:00 / +13:00 |
 
-Also supported: `WET`, `WEST`, `IST`, `EET`, `EEST`, `MSK`, `GST`, `PKT`, `ICT`, `WIB`, `HKT`, `SGT`, `KST`, `ACST`, `AST`, `ADT`, `NST`, `NDT`, `AKST`, `AKDT`, `HST`, `HDT`.
+Also supported: `WET`, `WEST`, `BRT`, `BRST`, `ART`, `UYT`, `COT`, `PET`, `ECT`, `VET`, `BOT`, `AMT`, `GYT`, `CLT`, `CLST`, `PYT`, `PYST`, `SRT`, `WAT`, `CAT`, `SAST`, `EAT`, `MSK`, `TRT`, `IDT`, `IRST`, `IRDT`, `GST`, `AZT`, `AFT`, `PKT`, `UZT`, `SLST`, `NPT`, `BDT`, `BTT`, `MMT`, `ICT`, `WIB`, `HOVT`, `HKT`, `SGT`, `MYT`, `PHT`, `WITA`, `AWST`, `KST`, `WIT`, `TLT`, `ACST`, `ACDT`, `LHST`, `LHDT`, `SBT`, `NCT`, `NFT`, `FJT`, `TOT`, `LINT`, `SST`, `MART`, `GAMT`.
 
-For timezones not in either list (e.g. India Standard Time +05:30, Bangladesh +06:00), use an offset directly.
+Where an abbreviation is ambiguous, the most widely-used interpretation is chosen (e.g. `IST` = India Standard Time +05:30). For any timezone not in either list, use an offset directly (e.g. `+05:30`, `UTC+8`, `-03:00`).
 
 **Offset formats** (any timezone):
 

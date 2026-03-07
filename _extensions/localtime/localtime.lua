@@ -4,40 +4,103 @@
 
 local counter = 0
 
--- Timezone abbreviations mapped to UTC offset in minutes
+-- Timezone abbreviations mapped to UTC offset in minutes.
+-- Where an abbreviation is ambiguous, the most widely-used interpretation is chosen.
 local TZ_OFFSETS = {
   -- Universal
   UTC = 0, GMT = 0,
+
   -- North America
-  EST = -300, EDT = -240,
-  CST = -360, CDT = -300,
-  MST = -420, MDT = -360,
-  PST = -480, PDT = -420,
-  AST = -240, ADT = -180,
-  NST = -210, NDT = -150,
-  AKST = -540, AKDT = -480,
-  HST = -600, HDT = -540,
+  NST = -210, NDT = -150,       -- Newfoundland
+  AST = -240, ADT = -180,       -- Atlantic
+  EST = -300, EDT = -240,       -- Eastern
+  CST = -360, CDT = -300,       -- Central
+  MST = -420, MDT = -360,       -- Mountain
+  PST = -480, PDT = -420,       -- Pacific
+  AKST = -540, AKDT = -480,     -- Alaska
+  HST = -600, HDT = -540,       -- Hawaii
+
+  -- South America
+  VET = -240,                   -- Venezuela
+  BOT = -240,                   -- Bolivia
+  PYT = -240,                   -- Paraguay Standard
+  CLT = -240,                   -- Chile Standard
+  AMT = -240,                   -- Amazon (Brazil)
+  GYT = -240,                   -- Guyana
+  COT = -300,                   -- Colombia
+  PET = -300,                   -- Peru
+  ECT = -300,                   -- Ecuador
+  BRT = -180,                   -- Brasilia
+  ART = -180,                   -- Argentina
+  UYT = -180,                   -- Uruguay
+  SRT = -180,                   -- Suriname
+  PYST = -180,                  -- Paraguay Summer
+  CLST = -180,                  -- Chile Summer
+  BRST = -120,                  -- Brasilia Summer
+
   -- Europe
-  WET = 0, WEST = 60,
-  CET = 60, CEST = 120,
-  EET = 120, EEST = 180,
-  BST = 60, IST = 60,
+  WET = 0, WEST = 60,           -- Western Europe
+  BST = 60,                     -- British Summer
+  CET = 60, CEST = 120,         -- Central Europe
+  EET = 120, EEST = 180,        -- Eastern Europe
+  MSK = 180,                    -- Moscow
+  TRT = 180,                    -- Turkey
+
+  -- Africa
+  WAT = 60,                     -- West Africa
+  CAT = 120,                    -- Central Africa
+  SAST = 120,                   -- South Africa Standard
+  EAT = 180,                    -- East Africa
+
+  -- Middle East
+  IDT = 180,                    -- Israel Daylight (Israel Standard = +02:00, use UTC+2)
+  IRST = 210,                   -- Iran Standard
+  IRDT = 270,                   -- Iran Daylight
+
   -- Asia
-  MSK = 180,
-  GST = 240,
-  PKT = 300,
-  IST_INDIA = 330, -- India
-  BST_BD = 360,    -- Bangladesh
-  ICT = 420,
-  WIB = 420,
-  CST_CN = 480,    -- China
-  HKT = 480,
-  SGT = 480,
-  JST = 540,
-  KST = 540,
-  ACST = 570,
-  AEST = 600, AEDT = 660,
-  NZST = 720, NZDT = 780,
+  GST = 240,                    -- Gulf
+  AZT = 240,                    -- Azerbaijan
+  AFT = 270,                    -- Afghanistan
+  PKT = 300,                    -- Pakistan
+  UZT = 300,                    -- Uzbekistan
+  IST = 330,                    -- India Standard (most common global usage)
+  SLST = 330,                   -- Sri Lanka
+  NPT = 345,                    -- Nepal
+  BDT = 360,                    -- Bangladesh
+  BTT = 360,                    -- Bhutan
+  MMT = 390,                    -- Myanmar
+  ICT = 420,                    -- Indochina
+  WIB = 420,                    -- Western Indonesia
+  HOVT = 420,                   -- Khovd (Mongolia)
+  -- CST is taken by US Central; China Standard Time users should use +08:00
+  HKT = 480,                    -- Hong Kong
+  SGT = 480,                    -- Singapore
+  MYT = 480,                    -- Malaysia
+  PHT = 480,                    -- Philippines
+  WITA = 480,                   -- Central Indonesia
+  AWST = 480,                   -- Australian Western Standard
+  JST = 540,                    -- Japan
+  KST = 540,                    -- Korea
+  WIT = 540,                    -- Eastern Indonesia
+  TLT = 540,                    -- Timor-Leste
+
+  -- Australia & Pacific
+  ACST = 570,                   -- Australian Central Standard
+  AEST = 600, AEDT = 660,       -- Australian Eastern
+  ACDT = 630,                   -- Australian Central Daylight
+  LHST = 630,                   -- Lord Howe Standard
+  SBT = 660,                    -- Solomon Islands
+  NCT = 660,                    -- New Caledonia
+  NFT = 660,                    -- Norfolk Island
+  LHDT = 660,                   -- Lord Howe Daylight
+  NZST = 720, NZDT = 780,       -- New Zealand
+  FJT = 720,                    -- Fiji
+  TOT = 780,                    -- Tonga
+  LINT = 840,                   -- Line Islands
+  SST = -660,                   -- Samoa Standard
+  WST = -660,                   -- West Samoa Standard (historical)
+  MART = -570,                  -- Marquesas
+  GAMT = -540,                  -- Gambier
 }
 
 local function is_leap_year(y)
