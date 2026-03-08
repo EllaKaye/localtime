@@ -28,11 +28,11 @@ Where:
 | `{{< localtime 2026-01-30 13:00 UTC >}}` | `2026-01-30 13:00` (UTC), `2026-01-30 14:00` (CET), `2026-01-30 08:00` (EST) |
 | `{{< localtime 2026-01-30 13:00 EST >}}` | `2026-01-30 18:00` (UTC), `2026-01-30 19:00` (CET), `2026-01-30 13:00` (EST) |
 | `{{< localtime 2026-01-30 09:00 CET >}}` | `2026-01-30 08:00` (UTC), `2026-01-30 03:00` (EST), `2026-01-30 17:00` (JST) |
-| `{{< localtime 2026-01-30 13:00 +05:30 >}}` | `2026-01-30 07:30` (UTC), `2026-01-30 08:30` (CET), `2026-01-30 02:30` (EST) |
+| `{{< localtime 2026-01-30 13:00 -05:00 >}}` | `2026-01-30 18:00` (UTC), `2026-01-30 19:00` (CET), `2026-01-30 10:00` (PST) |
 | `{{< localtime 2026-01-30 13:00 UTC format="full" >}}` | `Friday, 30 January 2026 at 13:00 GMT` (UTC), `Friday, 30 January 2026 at 14:00 CET` (CET), `Friday, 30 January 2026 at 08:00 EST` (EST) |
 | `{{< localtime 2026-01-30 13:00 UTC format="%d %B at %H:%M" >}}` | `30 January at 13:00` (UTC), `30 January at 14:00` (CET), `30 January at 08:00` (EST) |
 
-The timezone argument describes where the *input* time is, not an offset to apply to it. For example, `{{< localtime 2026-01-30 13:00 EST >}}` means "this event is at 13:00 Eastern time" — so a reader in UTC (UK) sees `2026-01-30 18:00`, because EST is 5 hours behind UTC. Equivalently, `{{< localtime 2026-01-30 13:00 -05:00 >}}` produces the same result.
+The timezone argument describes where the *input* time is, not an offset to apply to it. For example, `{{< localtime 2026-01-30 13:00 EST >}}` means "this event is at 13:00 Eastern time" — so a reader in GMT (UK) sees `2026-01-30 18:00`, because EST is 5 hours behind GMT. Equivalently, `{{< localtime 2026-01-30 13:00 -05:00 >}}` produces the same result.
 
 The shortcode renders the time in the reader's local timezone using JavaScript. If JavaScript is disabled, the original time and timezone are shown as a fallback.
 
@@ -113,3 +113,9 @@ Where an abbreviation is ambiguous, the most widely-used interpretation is chose
 - `UTC+5`, `UTC-8`, `UTC+5:30`
 - `GMT+1`, `GMT-5`
 - `+5`, `-8`
+
+## Example
+
+Here is the source code for some examples: [example.qmd](example.qmd)
+
+Rendered output: 
