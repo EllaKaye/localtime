@@ -98,8 +98,8 @@ ul.task-list li input[type="checkbox"] {
 </script></p></td>
 </tr>
 <tr class="even">
-<td><code>{{&lt; localtime 2026-01-30 13:00 +05:30 &gt;}}</code></td>
-<td><p><span id="localtime-4" class="localtime" data-utc="2026-01-30T07:30:00Z" data-format="">2026-01-30 13:00 +05:30</span><script>
+<td><code>{{&lt; localtime 2026-01-30 13:00 -05:00 &gt;}}</code></td>
+<td><p><span id="localtime-4" class="localtime" data-utc="2026-01-30T18:00:00Z" data-format="">2026-01-30 13:00 -05:00</span><script>
 (function(){var el=document.getElementById('localtime-4');var d=new Date(el.getAttribute('data-utc'));var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',full:'%A, %d %B %Y at %H:%M %Z'};if(P[fmt])fmt=P[fmt];function pad(n){return String(n).padStart(2,'0');}var y=d.getFullYear(),mo=d.getMonth()+1,dy=d.getDate(),h=d.getHours(),mi=d.getMinutes(),h12=h%12||12,ap=h<12?'AM':'PM';var tz=Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(d).find(function(p){return p.type==='timeZoneName';}).value;el.textContent=fmt.replace(/%Y/g,y).replace(/%m/g,pad(mo)).replace(/%d/g,pad(dy)).replace(/%H/g,pad(h)).replace(/%I/g,pad(h12)).replace(/%M/g,pad(mi)).replace(/%p/g,ap).replace(/%B/g,new Intl.DateTimeFormat(undefined,{month:'long'}).format(d)).replace(/%b/g,new Intl.DateTimeFormat(undefined,{month:'short'}).format(d)).replace(/%A/g,new Intl.DateTimeFormat(undefined,{weekday:'long'}).format(d)).replace(/%a/g,new Intl.DateTimeFormat(undefined,{weekday:'short'}).format(d)).replace(/%Z/g,tz);})();
 </script></p></td>
 </tr>
