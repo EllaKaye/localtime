@@ -192,8 +192,8 @@ local function to_utc_iso(year, month, day, hour, minute, tz_offset_minutes)
     utc_year, utc_month, utc_day, utc_h, utc_m)
 end
 
-local JS_TEMPLATE = [[<span id="%s" class="localtime" data-utc="%s">%s</span><script>
-(function(){var el=document.getElementById('%s');var d=new Date(el.getAttribute('data-utc'));var y=d.getFullYear();var mo=String(d.getMonth()+1).padStart(2,'0');var dy=String(d.getDate()).padStart(2,'0');var h=String(d.getHours()).padStart(2,'0');var mi=String(d.getMinutes()).padStart(2,'0');el.textContent=y+'-'+mo+'-'+dy+' '+h+':'+mi;})();
+local JS_TEMPLATE = [[<span id="%s" class="localtime" data-utc="%s" data-format="%s">%s</span><script>
+(function(){var el=document.getElementById('%s');var d=new Date(el.getAttribute('data-utc'));var fmt=el.getAttribute('data-format')||'%%Y-%%m-%%d %%H:%%M';var P={datetime:'%%Y-%%m-%%d %%H:%%M',date:'%%Y-%%m-%%d',time:'%%H:%%M',time12:'%%I:%%M %%p',full:'%%A, %%d %%B %%Y at %%H:%%M %%Z'};if(P[fmt])fmt=P[fmt];function pad(n){return String(n).padStart(2,'0');}var y=d.getFullYear(),mo=d.getMonth()+1,dy=d.getDate(),h=d.getHours(),mi=d.getMinutes(),h12=h%%12||12,ap=h<12?'AM':'PM';var tz=Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(d).find(function(p){return p.type==='timeZoneName';}).value;el.textContent=fmt.replace(/%%Y/g,y).replace(/%%m/g,pad(mo)).replace(/%%d/g,pad(dy)).replace(/%%H/g,pad(h)).replace(/%%I/g,pad(h12)).replace(/%%M/g,pad(mi)).replace(/%%p/g,ap).replace(/%%B/g,new Intl.DateTimeFormat(undefined,{month:'long'}).format(d)).replace(/%%b/g,new Intl.DateTimeFormat(undefined,{month:'short'}).format(d)).replace(/%%A/g,new Intl.DateTimeFormat(undefined,{weekday:'long'}).format(d)).replace(/%%a/g,new Intl.DateTimeFormat(undefined,{weekday:'short'}).format(d)).replace(/%%Z/g,tz);})();
 </script>]]
 
 return {
@@ -243,11 +243,17 @@ return {
     -- Fallback text: original time with timezone
     local fallback = string.format("%s %s %s", date_str, time_str, tz_str or "UTC")
 
+    -- Optional format argument (named kwarg)
+    local fmt_attr = "%Y-%m-%d %H:%M"
+    if kwargs["format"] then
+      fmt_attr = pandoc.utils.stringify(kwargs["format"])
+    end
+
     -- Unique element ID
     counter = counter + 1
     local id = "localtime-" .. counter
 
-    local html = string.format(JS_TEMPLATE, id, utc_iso, fallback, id)
+    local html = string.format(JS_TEMPLATE, id, utc_iso, fmt_attr, fallback, id)
     return pandoc.RawInline("html", html)
   end
 }

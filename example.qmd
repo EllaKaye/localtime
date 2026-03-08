@@ -15,7 +15,27 @@ The "Renders as" column below updates to your local time when the page loads.
 | `{{</* localtime 2026-01-30 09:00 CET */>}}` | {{< localtime 2026-01-30 09:00 CET >}} |
 | `{{</* localtime 2026-01-30 13:00 +05:30 */>}}` | {{< localtime 2026-01-30 13:00 +05:30 >}} |
 | `{{</* localtime 2026-06-15 09:00 UTC */>}}` | {{< localtime 2026-06-15 09:00 UTC >}} |
-| `{{</* localtime 2026-06-15 14:00 UTC */>}}` | {{< localtime 2026-06-15 14:00 UTC >}} |
+| `{{</* localtime 2026-01-30 13:00 UTC format="full" */>}}` | {{< localtime 2026-01-30 13:00 UTC format="full" >}} |
+| `{{</* localtime 2026-01-30 13:00 UTC format="%d %B at %H:%M" */>}}` | {{< localtime 2026-01-30 13:00 UTC format="%d %B at %H:%M" >}} |
+
+## Format presets
+
+| Shortcode | Renders locally as |
+|---|---|
+| `{{</* localtime 2026-01-30 13:00 UTC format="date" */>}}` | {{< localtime 2026-01-30 13:00 UTC format="date" >}} |
+| `{{</* localtime 2026-01-30 13:00 UTC format="time" */>}}` | {{< localtime 2026-01-30 13:00 UTC format="time" >}} |
+| `{{</* localtime 2026-01-30 13:00 UTC format="time12" */>}}` | {{< localtime 2026-01-30 13:00 UTC format="time12" >}} |
+| `{{</* localtime 2026-01-30 13:00 UTC format="datetime" */>}}` | {{< localtime 2026-01-30 13:00 UTC format="datetime" >}} |
+| `{{</* localtime 2026-01-30 13:00 UTC format="full" */>}}` | {{< localtime 2026-01-30 13:00 UTC format="full" >}} |
+
+## Custom format strings
+
+| Shortcode | Renders locally as |
+|---|---|
+| `{{</* localtime 2026-01-30 13:00 UTC format="%H:%M" */>}}` | {{< localtime 2026-01-30 13:00 UTC format="%H:%M" >}} |
+| `{{</* localtime 2026-01-30 13:00 UTC format="%d %B %Y" */>}}` | {{< localtime 2026-01-30 13:00 UTC format="%d %B %Y" >}} |
+| `{{</* localtime 2026-01-30 13:00 UTC format="%I:%M %p" */>}}` | {{< localtime 2026-01-30 13:00 UTC format="%I:%M %p" >}} |
+| `{{</* localtime 2026-01-30 13:00 UTC format="%A, %d %B %Y at %H:%M %Z" */>}}` | {{< localtime 2026-01-30 13:00 UTC format="%A, %d %B %Y at %H:%M %Z" >}} |
 
 ## Supported timezone formats
 

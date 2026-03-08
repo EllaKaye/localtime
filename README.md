@@ -12,12 +12,14 @@ quarto add EllaKaye/localtime
 
 ```
 {{< localtime YYYY-MM-DD HH:MM TZ >}}
+{{< localtime YYYY-MM-DD HH:MM TZ format="..." >}}
 ```
 
 Where:
 - `YYYY-MM-DD` is the date
 - `HH:MM` is the time (24-hour format)
 - `TZ` is the source timezone (abbreviation or offset)
+- `format` (optional) controls the output format — see [Format strings](#format-strings) below
 
 ### Examples
 
@@ -27,10 +29,55 @@ Where:
 | `{{< localtime 2026-01-30 13:00 EST >}}` | `2026-01-30 18:00` (UTC), `2026-01-30 19:00` (CET), `2026-01-30 13:00` (EST) |
 | `{{< localtime 2026-01-30 09:00 CET >}}` | `2026-01-30 08:00` (UTC), `2026-01-30 03:00` (EST), `2026-01-30 17:00` (JST) |
 | `{{< localtime 2026-01-30 13:00 +05:30 >}}` | `2026-01-30 07:30` (UTC), `2026-01-30 08:30` (CET), `2026-01-30 02:30` (EST) |
+| `{{< localtime 2026-01-30 13:00 UTC format="full" >}}` | `Friday, 30 January 2026 at 13:00 GMT` (UTC), `Friday, 30 January 2026 at 14:00 CET` (CET), `Friday, 30 January 2026 at 08:00 EST` (EST) |
+| `{{< localtime 2026-01-30 13:00 UTC format="%d %B at %H:%M" >}}` | `30 January at 13:00` (UTC), `30 January at 14:00` (CET), `30 January at 08:00` (EST) |
 
 The timezone argument describes where the *input* time is, not an offset to apply to it. For example, `{{< localtime 2026-01-30 13:00 EST >}}` means "this event is at 13:00 Eastern time" — so a reader in UTC (UK) sees `2026-01-30 18:00`, because EST is 5 hours behind UTC. Equivalently, `{{< localtime 2026-01-30 13:00 -05:00 >}}` produces the same result.
 
-The shortcode renders the time in `YYYY-MM-DD HH:MM` format in the reader's local timezone, using JavaScript. If JavaScript is disabled, the original time and timezone are shown as a fallback.
+The shortcode renders the time in the reader's local timezone using JavaScript. If JavaScript is disabled, the original time and timezone are shown as a fallback.
+
+## Format strings
+
+Use the optional `format` named argument to control how the date and time are displayed.
+
+### Presets
+
+| Preset | Format string | Example output |
+|--------|--------------|----------------|
+| `datetime` | `%Y-%m-%d %H:%M` | `2026-01-30 18:00` |
+| `date` | `%Y-%m-%d` | `2026-01-30` |
+| `time` | `%H:%M` | `18:00` |
+| `time12` | `%I:%M %p` | `06:00 PM` |
+| `full` | `%A, %d %B %Y at %H:%M %Z` | `Friday, 30 January 2026 at 18:00 GMT` |
+
+If no `format` is given, `datetime` is used (current behavior, unchanged).
+
+```
+{{< localtime 2026-01-30 13:00 EST format="full" >}}
+```
+
+### Custom format tokens
+
+| Token | Meaning | Example |
+|-------|---------|---------|
+| `%Y` | 4-digit year | `2026` |
+| `%m` | 2-digit month | `01` |
+| `%d` | 2-digit day | `30` |
+| `%H` | Hour, 24h, 2-digit | `18` |
+| `%I` | Hour, 12h, 2-digit | `06` |
+| `%M` | Minutes, 2-digit | `00` |
+| `%p` | AM/PM | `PM` |
+| `%B` | Full month name (locale-aware) | `January` |
+| `%b` | Abbreviated month name (locale-aware) | `Jan` |
+| `%A` | Full day name (locale-aware) | `Friday` |
+| `%a` | Abbreviated day name (locale-aware) | `Fri` |
+| `%Z` | Local timezone abbreviation | `GMT` |
+
+Month/day names (`%B`, `%b`, `%A`, `%a`) are rendered in the reader's browser locale. `%Z` shows the reader's local timezone abbreviation.
+
+```
+{{< localtime 2026-01-30 13:00 EST format="%d %B %Y at %I:%M %p (%Z)" >}}
+```
 
 ## Supported timezones
 
