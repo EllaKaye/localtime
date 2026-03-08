@@ -118,4 +118,8 @@ Where an abbreviation is ambiguous, the most widely-used interpretation is chose
 
 Here is the source code for some examples: [example.qmd](example.qmd)
 
-Rendered output: 
+Rendered output: <https://ellakaye.github.io/localtime>
+
+## Notes
+
+The extension was written by Claude Code.
