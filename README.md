@@ -18,7 +18,7 @@ quarto add EllaKaye/localtime
 Where:
 - `YYYY-MM-DD` is the date
 - `HH:MM` is the time (24-hour format)
-- `TZ` is the source timezone (abbreviation or offset)
+- `TZ` is the source timezone (abbreviation or offset) - see [Supported timezones](#supported-timezones) below
 - `format` (optional) controls the output format — see [Format strings](#format-strings) below
 
 ### Examples
