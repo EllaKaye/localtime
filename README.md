@@ -122,4 +122,8 @@ Rendered output: <https://ellakaye.github.io/localtime>
 
 ## Notes
 
-The extension was written by Claude Code.
+This extension was written by Claude Code. 
+
+I developed it primarily for use on [rainbowR's meet-ups](https://rainbowr.org/meetups) page.
+
+I got the idea after learning about hammertime in Discord.
