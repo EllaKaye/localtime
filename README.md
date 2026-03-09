@@ -106,6 +106,29 @@ Also supported: `WET`, `WEST`, `BRT`, `BRST`, `ART`, `UYT`, `COT`, `PET`, `ECT`,
 
 Where an abbreviation is ambiguous, the most widely-used interpretation is chosen (e.g. `IST` = India Standard Time +05:30). For any timezone not in either list, use an offset directly (e.g. `+05:30`, `UTC+8`, `-03:00`).
 
+### DST auto-correction
+
+For the following timezone pairs, the extension automatically applies the correct offset based on the date. You can write `CET` for a summer date and it will use CEST (+02:00) automatically — a build-time note is printed to the terminal when this happens.
+
+| Standard | DST | Standard offset | DST offset |
+|---|---|---|---|
+| CET | CEST | +01:00 | +02:00 |
+| WET | WEST | +00:00 | +01:00 |
+| EET | EEST | +02:00 | +03:00 |
+| EST | EDT | -05:00 | -04:00 |
+| CST | CDT | -06:00 | -05:00 |
+| MST | MDT | -07:00 | -06:00 |
+| PST | PDT | -08:00 | -07:00 |
+| AKST | AKDT | -09:00 | -08:00 |
+| AEST | AEDT | +10:00 | +11:00 |
+| NZST | NZDT | +12:00 | +13:00 |
+
+**Caveats:**
+
+- **MST / Arizona**: Arizona does not observe DST and uses MST year-round. If you are specifying an Arizona time, use `+07:00` directly instead of `MST` to avoid auto-correction to MDT in summer.
+- **AEST / Queensland**: Queensland does not observe DST and uses AEST year-round. Use `+10:00` directly to avoid auto-correction to AEDT in summer.
+- **Explicit wrong-season abbreviation**: If you write the DST abbreviation (e.g. `CEST`) for a date that is not in DST, a warning is emitted at build time but the specified offset is used (your explicit choice is honoured).
+
 **Offset formats** (any timezone):
 
 - `+05:30`, `-08:00`

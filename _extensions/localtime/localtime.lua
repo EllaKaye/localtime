@@ -114,6 +114,25 @@ local function days_in_month(m, y)
   return DAYS_IN_MONTH[m]
 end
 
+-- Tomohiko Sakamoto's algorithm. Returns 0=Sunday … 6=Saturday.
+local function day_of_week(y, m, d)
+  local t = {0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4}
+  if m < 3 then y = y - 1 end
+  return (y + math.floor(y/4) - math.floor(y/100) + math.floor(y/400) + t[m] + d) % 7
+end
+
+local function last_sunday_of_month(year, month)
+  local last = days_in_month(month, year)
+  local dow = day_of_week(year, month, last)
+  return last - dow  -- dow=0 → last IS Sunday; dow=6 → last-6
+end
+
+local function nth_sunday_of_month(year, month, n)
+  local first_day_dow = day_of_week(year, month, 1)
+  local days_to_first = (7 - first_day_dow) % 7
+  return 1 + days_to_first + (n - 1) * 7
+end
+
 -- Normalize a datetime after arithmetic (handles day/month/year boundaries)
 local function normalize_datetime(year, month, day, hour, minute)
   -- Normalize minutes -> hours
@@ -141,12 +160,129 @@ local function normalize_datetime(year, month, day, hour, minute)
   return year, month, day, hour, minute
 end
 
+-- DST rule functions --
+
+-- EU rule: last Sunday of March at 01:00 UTC → last Sunday of October at 01:00 UTC.
+-- Input is local standard time; we convert to UTC using standard_offset_minutes.
+local function is_eu_dst(year, month, day, hour, minute, standard_offset_minutes)
+  local total_min = hour * 60 + minute - standard_offset_minutes
+  local adj_hour = math.floor(total_min / 60)
+  local adj_min  = total_min % 60
+  if adj_min < 0 then adj_min = adj_min + 60; adj_hour = adj_hour - 1 end
+  local uy, um, ud, uh, ui = normalize_datetime(year, month, day, adj_hour, adj_min)
+
+  local function ord(mo, dy, hr, mi) return mo*100000 + dy*1000 + hr*60 + mi end
+  local now_ord   = ord(um, ud, uh, ui)
+  local start_ord = ord(3,  last_sunday_of_month(uy, 3),  1, 0)
+  local end_ord   = ord(10, last_sunday_of_month(uy, 10), 1, 0)
+  return now_ord >= start_ord and now_ord < end_ord
+end
+
+-- US rule: 2nd Sunday of March at 02:00 LST → 1st Sunday of November at 01:00 LST.
+local function is_us_dst(year, month, day, hour, minute)
+  local function ord(mo, dy, hr, mi) return mo*100000 + dy*1000 + hr*60 + mi end
+  local now_ord   = ord(month, day, hour, minute)
+  local start_ord = ord(3,  nth_sunday_of_month(year, 3,  2), 2, 0)
+  local end_ord   = ord(11, nth_sunday_of_month(year, 11, 1), 1, 0)
+  return now_ord >= start_ord and now_ord < end_ord
+end
+
+-- Australian Eastern: 1st Sunday of October at 02:00 AEST → 1st Sunday of April at 02:00 AEST.
+local function is_au_dst(year, month, day, hour, minute)
+  if month > 4 and month < 10 then return false end
+  if month > 10 or month < 4  then return true  end
+  local function ord(mo, dy, hr, mi) return mo*100000 + dy*1000 + hr*60 + mi end
+  local now_ord = ord(month, day, hour, minute)
+  if month == 10 then
+    return now_ord >= ord(10, nth_sunday_of_month(year, 10, 1), 2, 0)
+  end
+  -- month == 4
+  return now_ord < ord(4, nth_sunday_of_month(year, 4, 1), 2, 0)
+end
+
+-- New Zealand: last Sunday of September at 02:00 NZST → 1st Sunday of April at 02:00 NZST.
+local function is_nz_dst(year, month, day, hour, minute)
+  if month > 4 and month < 9  then return false end
+  if month > 9 or month < 4   then return true  end
+  local function ord(mo, dy, hr, mi) return mo*100000 + dy*1000 + hr*60 + mi end
+  local now_ord = ord(month, day, hour, minute)
+  if month == 9 then
+    return now_ord >= ord(9, last_sunday_of_month(year, 9), 2, 0)
+  end
+  -- month == 4
+  return now_ord < ord(4, nth_sunday_of_month(year, 4, 1), 2, 0)
+end
+
+local DST_PAIRS = {
+  -- EU
+  CET  = {standard="CET",  dst="CEST", standard_offset=60,   dst_offset=120,  rule="eu"},
+  CEST = {standard="CET",  dst="CEST", standard_offset=60,   dst_offset=120,  rule="eu"},
+  WET  = {standard="WET",  dst="WEST", standard_offset=0,    dst_offset=60,   rule="eu"},
+  WEST = {standard="WET",  dst="WEST", standard_offset=0,    dst_offset=60,   rule="eu"},
+  EET  = {standard="EET",  dst="EEST", standard_offset=120,  dst_offset=180,  rule="eu"},
+  EEST = {standard="EET",  dst="EEST", standard_offset=120,  dst_offset=180,  rule="eu"},
+  -- US/Canada
+  EST  = {standard="EST",  dst="EDT",  standard_offset=-300, dst_offset=-240, rule="us"},
+  EDT  = {standard="EST",  dst="EDT",  standard_offset=-300, dst_offset=-240, rule="us"},
+  CST  = {standard="CST",  dst="CDT",  standard_offset=-360, dst_offset=-300, rule="us"},
+  CDT  = {standard="CST",  dst="CDT",  standard_offset=-360, dst_offset=-300, rule="us"},
+  MST  = {standard="MST",  dst="MDT",  standard_offset=-420, dst_offset=-360, rule="us"},
+  MDT  = {standard="MST",  dst="MDT",  standard_offset=-420, dst_offset=-360, rule="us"},
+  PST  = {standard="PST",  dst="PDT",  standard_offset=-480, dst_offset=-420, rule="us"},
+  PDT  = {standard="PST",  dst="PDT",  standard_offset=-480, dst_offset=-420, rule="us"},
+  AKST = {standard="AKST", dst="AKDT", standard_offset=-540, dst_offset=-480, rule="us"},
+  AKDT = {standard="AKST", dst="AKDT", standard_offset=-540, dst_offset=-480, rule="us"},
+  -- Australia Eastern
+  AEST = {standard="AEST", dst="AEDT", standard_offset=600,  dst_offset=660,  rule="au"},
+  AEDT = {standard="AEST", dst="AEDT", standard_offset=600,  dst_offset=660,  rule="au"},
+  -- New Zealand
+  NZST = {standard="NZST", dst="NZDT", standard_offset=720,  dst_offset=780,  rule="nz"},
+  NZDT = {standard="NZST", dst="NZDT", standard_offset=720,  dst_offset=780,  rule="nz"},
+}
+
 -- Parse a timezone string, return offset in minutes from UTC (positive = east)
 -- Returns nil if unrecognised
-local function parse_tz(tz_str)
+local function parse_tz(tz_str, year, month, day, hour, minute)
   if not tz_str or tz_str == "" then return 0 end
 
   tz_str = tz_str:upper()
+
+  -- Offset formatting helper
+  local function fmt_offset(off)
+    local sign = off >= 0 and "+" or "-"
+    local abs = math.abs(off)
+    return string.format("%s%02d:%02d", sign, math.floor(abs/60), abs%60)
+  end
+
+  -- DST-aware lookup for known DST pairs
+  if DST_PAIRS[tz_str] and year then
+    local pair = DST_PAIRS[tz_str]
+    local in_dst
+    if     pair.rule == "eu" then in_dst = is_eu_dst(year, month, day, hour, minute, pair.standard_offset)
+    elseif pair.rule == "us" then in_dst = is_us_dst(year, month, day, hour, minute)
+    elseif pair.rule == "au" then in_dst = is_au_dst(year, month, day, hour, minute)
+    elseif pair.rule == "nz" then in_dst = is_nz_dst(year, month, day, hour, minute)
+    end
+
+    local date_str = string.format("%04d-%02d-%02d", year, month, day)
+    local user_wrote_dst = (tz_str == pair.dst)
+
+    if in_dst and not user_wrote_dst then
+      -- Auto-correct: user wrote standard abbreviation but date is in DST
+      io.stderr:write(string.format(
+        "[localtime] Note: %s on %s is in DST — using %s (%s) instead\n",
+        pair.standard, date_str, pair.dst, fmt_offset(pair.dst_offset)))
+      return pair.dst_offset
+    elseif not in_dst and user_wrote_dst then
+      -- Warn: user wrote DST abbreviation but date is not in DST
+      io.stderr:write(string.format(
+        "[localtime] Warning: %s is the DST abbreviation but %s is not in DST for this zone — did you mean %s?\n",
+        pair.dst, date_str, pair.standard))
+      return pair.dst_offset  -- honour explicit user choice
+    else
+      return in_dst and pair.dst_offset or pair.standard_offset
+    end
+  end
 
   -- Direct abbreviation lookup
   if TZ_OFFSETS[tz_str] then
@@ -244,7 +380,7 @@ return {
     end
 
     -- Parse timezone
-    local tz_offset = parse_tz(tz_str or "UTC")
+    local tz_offset = parse_tz(tz_str or "UTC", year, month, day, hour, minute)
     if tz_offset == nil then
       io.stderr:write("[localtime] Warning: unrecognised timezone '" .. (tz_str or "") .. "', assuming UTC\n")
       tz_offset = 0

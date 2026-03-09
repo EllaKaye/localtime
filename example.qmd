@@ -42,3 +42,16 @@ The "Renders as" column below updates to your local time when the page loads.
 - Common abbreviations: `UTC`, `GMT`, `EST`, `EDT`, `CST`, `CDT`, `MST`, `MDT`, `PST`, `PDT`, `CET`, `CEST`, `BST`, `JST`, `AEST`, `AEDT`, `NZST`, `NZDT`, and more
 - UTC offsets: `+05:30`, `-08:00`, `+0530`, `-8`
 - Prefixed offsets: `UTC+5`, `UTC-8`, `GMT+1`
+
+## DST auto-correction
+
+For common DST-observing timezone pairs, the extension automatically applies the
+correct offset based on the date. Writing `CET` for a summer date uses CEST (+02:00);
+writing `EST` for a summer date uses EDT (-04:00).
+
+| Shortcode | Renders locally as |
+|---|---|
+| `{{</* localtime 2026-07-15 14:00 CET */>}}` | {{< localtime 2026-07-15 14:00 CET >}} |
+| `{{</* localtime 2026-01-15 14:00 CET */>}}` | {{< localtime 2026-01-15 14:00 CET >}} |
+| `{{</* localtime 2026-07-15 09:00 EST */>}}` | {{< localtime 2026-07-15 09:00 EST >}} |
+| `{{</* localtime 2026-01-15 09:00 EST */>}}` | {{< localtime 2026-01-15 09:00 EST >}} |
