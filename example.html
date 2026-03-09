@@ -220,6 +220,48 @@ ul.task-list li input[type="checkbox"] {
 <li>Prefixed offsets: <code>UTC+5</code>, <code>UTC-8</code>, <code>GMT+1</code></li>
 </ul>
 </section>
+<section id="dst-auto-correction" class="level2">
+<h2 class="anchored" data-anchor-id="dst-auto-correction">DST auto-correction</h2>
+<p>For common DST-observing timezone pairs, the extension automatically applies the correct offset based on the date. Writing <code>CET</code> for a summer date uses CEST (+02:00); writing <code>EST</code> for a summer date uses EDT (-04:00).</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Shortcode</th>
+<th>Renders locally as</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>{{&lt; localtime 2026-07-15 14:00 CET &gt;}}</code></td>
+<td><p><span id="localtime-17" class="localtime" data-utc="2026-07-15T12:00:00Z" data-format="">2026-07-15 14:00 CET</span><script>
+(function(){var el=document.getElementById('localtime-17');var d=new Date(el.getAttribute('data-utc'));var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',full:'%A, %d %B %Y at %H:%M %Z'};if(P[fmt])fmt=P[fmt];function pad(n){return String(n).padStart(2,'0');}var y=d.getFullYear(),mo=d.getMonth()+1,dy=d.getDate(),h=d.getHours(),mi=d.getMinutes(),h12=h%12||12,ap=h<12?'AM':'PM';var tzPart=Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(d).find(function(p){return p.type==='timeZoneName';});var tz=tzPart?tzPart.value:'';el.textContent=fmt.replace(/%Y/g,y).replace(/%m/g,pad(mo)).replace(/%d/g,pad(dy)).replace(/%H/g,pad(h)).replace(/%I/g,pad(h12)).replace(/%M/g,pad(mi)).replace(/%p/g,ap).replace(/%B/g,new Intl.DateTimeFormat(undefined,{month:'long'}).format(d)).replace(/%b/g,new Intl.DateTimeFormat(undefined,{month:'short'}).format(d)).replace(/%A/g,new Intl.DateTimeFormat(undefined,{weekday:'long'}).format(d)).replace(/%a/g,new Intl.DateTimeFormat(undefined,{weekday:'short'}).format(d)).replace(/%Z/g,tz);})();
+</script></p></td>
+</tr>
+<tr class="even">
+<td><code>{{&lt; localtime 2026-01-15 14:00 CET &gt;}}</code></td>
+<td><p><span id="localtime-18" class="localtime" data-utc="2026-01-15T13:00:00Z" data-format="">2026-01-15 14:00 CET</span><script>
+(function(){var el=document.getElementById('localtime-18');var d=new Date(el.getAttribute('data-utc'));var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',full:'%A, %d %B %Y at %H:%M %Z'};if(P[fmt])fmt=P[fmt];function pad(n){return String(n).padStart(2,'0');}var y=d.getFullYear(),mo=d.getMonth()+1,dy=d.getDate(),h=d.getHours(),mi=d.getMinutes(),h12=h%12||12,ap=h<12?'AM':'PM';var tzPart=Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(d).find(function(p){return p.type==='timeZoneName';});var tz=tzPart?tzPart.value:'';el.textContent=fmt.replace(/%Y/g,y).replace(/%m/g,pad(mo)).replace(/%d/g,pad(dy)).replace(/%H/g,pad(h)).replace(/%I/g,pad(h12)).replace(/%M/g,pad(mi)).replace(/%p/g,ap).replace(/%B/g,new Intl.DateTimeFormat(undefined,{month:'long'}).format(d)).replace(/%b/g,new Intl.DateTimeFormat(undefined,{month:'short'}).format(d)).replace(/%A/g,new Intl.DateTimeFormat(undefined,{weekday:'long'}).format(d)).replace(/%a/g,new Intl.DateTimeFormat(undefined,{weekday:'short'}).format(d)).replace(/%Z/g,tz);})();
+</script></p></td>
+</tr>
+<tr class="odd">
+<td><code>{{&lt; localtime 2026-07-15 09:00 EST &gt;}}</code></td>
+<td><p><span id="localtime-19" class="localtime" data-utc="2026-07-15T13:00:00Z" data-format="">2026-07-15 09:00 EST</span><script>
+(function(){var el=document.getElementById('localtime-19');var d=new Date(el.getAttribute('data-utc'));var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',full:'%A, %d %B %Y at %H:%M %Z'};if(P[fmt])fmt=P[fmt];function pad(n){return String(n).padStart(2,'0');}var y=d.getFullYear(),mo=d.getMonth()+1,dy=d.getDate(),h=d.getHours(),mi=d.getMinutes(),h12=h%12||12,ap=h<12?'AM':'PM';var tzPart=Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(d).find(function(p){return p.type==='timeZoneName';});var tz=tzPart?tzPart.value:'';el.textContent=fmt.replace(/%Y/g,y).replace(/%m/g,pad(mo)).replace(/%d/g,pad(dy)).replace(/%H/g,pad(h)).replace(/%I/g,pad(h12)).replace(/%M/g,pad(mi)).replace(/%p/g,ap).replace(/%B/g,new Intl.DateTimeFormat(undefined,{month:'long'}).format(d)).replace(/%b/g,new Intl.DateTimeFormat(undefined,{month:'short'}).format(d)).replace(/%A/g,new Intl.DateTimeFormat(undefined,{weekday:'long'}).format(d)).replace(/%a/g,new Intl.DateTimeFormat(undefined,{weekday:'short'}).format(d)).replace(/%Z/g,tz);})();
+</script></p></td>
+</tr>
+<tr class="even">
+<td><code>{{&lt; localtime 2026-01-15 09:00 EST &gt;}}</code></td>
+<td><p><span id="localtime-20" class="localtime" data-utc="2026-01-15T14:00:00Z" data-format="">2026-01-15 09:00 EST</span><script>
+(function(){var el=document.getElementById('localtime-20');var d=new Date(el.getAttribute('data-utc'));var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',full:'%A, %d %B %Y at %H:%M %Z'};if(P[fmt])fmt=P[fmt];function pad(n){return String(n).padStart(2,'0');}var y=d.getFullYear(),mo=d.getMonth()+1,dy=d.getDate(),h=d.getHours(),mi=d.getMinutes(),h12=h%12||12,ap=h<12?'AM':'PM';var tzPart=Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(d).find(function(p){return p.type==='timeZoneName';});var tz=tzPart?tzPart.value:'';el.textContent=fmt.replace(/%Y/g,y).replace(/%m/g,pad(mo)).replace(/%d/g,pad(dy)).replace(/%H/g,pad(h)).replace(/%I/g,pad(h12)).replace(/%M/g,pad(mi)).replace(/%p/g,ap).replace(/%B/g,new Intl.DateTimeFormat(undefined,{month:'long'}).format(d)).replace(/%b/g,new Intl.DateTimeFormat(undefined,{month:'short'}).format(d)).replace(/%A/g,new Intl.DateTimeFormat(undefined,{weekday:'long'}).format(d)).replace(/%a/g,new Intl.DateTimeFormat(undefined,{weekday:'short'}).format(d)).replace(/%Z/g,tz);})();
+</script></p></td>
+</tr>
+</tbody>
+</table>
+</section>
 
 </main>
 <!-- /main column -->
