@@ -106,7 +106,7 @@ Also supported: `WET`, `WEST`, `BRT`, `BRST`, `ART`, `UYT`, `COT`, `PET`, `ECT`,
 
 Where an abbreviation is ambiguous, the most widely-used interpretation is chosen (e.g. `IST` = India Standard Time +05:30). For any timezone not in either list, use an offset directly (e.g. `+05:30`, `UTC+8`, `-03:00`).
 
-### DST auto-correction
+### Daylight Saving Time (DST) auto-correction
 
 For the following timezone pairs, the extension automatically applies the correct offset based on the date. You can write `CET` for a summer date and it will use CEST (+02:00) automatically — a build-time note is printed to the terminal when this happens.
 

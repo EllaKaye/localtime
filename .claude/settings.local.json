@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(quarto:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "WebSearch"
     ]
   }
 }
