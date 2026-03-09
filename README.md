@@ -34,7 +34,7 @@ Where:
 
 The timezone argument describes where the *input* time is, not an offset to apply to it. For example, `{{< localtime 2026-01-30 13:00 EST >}}` means "this event is at 13:00 Eastern time" — so a reader in GMT (UK) sees `2026-01-30 18:00`, because EST is 5 hours behind GMT. Equivalently, `{{< localtime 2026-01-30 13:00 -05:00 >}}` produces the same result.
 
-The shortcode renders the time in the reader's local timezone using JavaScript. If JavaScript is disabled, the original time and timezone are shown as a fallback.
+The shortcode renders the time in the reader's local timezone using JavaScript. If JavaScript is disabled, the original time and timezone are shown as a fallback (the `format` argument has no effect in this case — the fallback always shows the full original datetime).
 
 ## Format strings
 
@@ -102,7 +102,7 @@ Month/day names (`%B`, `%b`, `%A`, `%a`) are rendered in the reader's browser lo
 | AEST / AEDT | +10:00 / +11:00 |
 | NZST / NZDT | +12:00 / +13:00 |
 
-Also supported: `WET`, `WEST`, `BRT`, `BRST`, `ART`, `UYT`, `COT`, `PET`, `ECT`, `VET`, `BOT`, `AMT`, `GYT`, `CLT`, `CLST`, `PYT`, `PYST`, `SRT`, `WAT`, `CAT`, `SAST`, `EAT`, `MSK`, `TRT`, `IDT`, `IRST`, `IRDT`, `GST`, `AZT`, `AFT`, `PKT`, `UZT`, `SLST`, `NPT`, `BDT`, `BTT`, `MMT`, `ICT`, `WIB`, `HOVT`, `HKT`, `SGT`, `MYT`, `PHT`, `WITA`, `AWST`, `KST`, `WIT`, `TLT`, `ACST`, `ACDT`, `LHST`, `LHDT`, `SBT`, `NCT`, `NFT`, `FJT`, `TOT`, `LINT`, `SST`, `MART`, `GAMT`.
+Also supported: `WET`, `WEST`, `BRT`, `BRST`, `ART`, `UYT`, `COT`, `PET`, `ECT`, `VET`, `BOT`, `AMT`, `GYT`, `CLT`, `CLST`, `PYT`, `PYST`, `SRT`, `WAT`, `CAT`, `SAST`, `EAT`, `MSK`, `TRT`, `IDT`, `IRST`, `IRDT`, `GST`, `AZT`, `AFT`, `PKT`, `UZT`, `SLST`, `NPT`, `BDT`, `BTT`, `MMT`, `ICT`, `WIB`, `HOVT`, `HKT`, `SGT`, `MYT`, `PHT`, `WITA`, `AWST`, `KST`, `WIT`, `TLT`, `ACST`, `ACDT`, `LHST`, `LHDT`, `SBT`, `NCT`, `NFT`, `FJT`, `TOT`, `LINT`, `SST`, `WST`, `MART`, `GAMT`.
 
 Where an abbreviation is ambiguous, the most widely-used interpretation is chosen (e.g. `IST` = India Standard Time +05:30). For any timezone not in either list, use an offset directly (e.g. `+05:30`, `UTC+8`, `-03:00`).
 
