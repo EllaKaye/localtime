@@ -1,0 +1,33 @@
+$schema: https://m.canouil.dev/quarto-wizard/assets/schema/v1/extension-schema.json
+
+shortcodes:
+  localtime:
+    description: Display a source date and time in the reader local timezone.
+    arguments:
+      - name: date
+        type: string
+        required: true
+        pattern: \d{4}-\d{2}-\d{2}
+        pattern-exact: true
+        description: Source date in YYYY-MM-DD format.
+      - name: time
+        type: string
+        required: true
+        pattern: \d{1,2}:\d{2}
+        pattern-exact: true
+        description: Source time in 24-hour HH:MM format.
+      - name: timezone
+        type: string
+        default: UTC
+        description: Source timezone abbreviation or UTC offset such as UTC, EST, CET, +05:30, or UTC+8.
+        completion:
+          type: freeform
+          placeholder: UTC | EST | CET | +05:30 | UTC+8
+    attributes:
+      format:
+        type: string
+        default: datetime
+        description: Output format preset or a custom token string.
+        completion:
+          type: enum
+          values: [datetime, date, time, time12, full]
