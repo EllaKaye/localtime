@@ -69,12 +69,12 @@ Use the optional `format` named argument to control how the date and time are di
 | `datetime` | `%Y-%m-%d %H:%M` | `2026-01-30 18:00` |
 | `date` | `%Y-%m-%d` | `2026-01-30` |
 | `time` | `%H:%M` | `18:00` |
-| `time12` | `%I:%M %p` | `06:00 PM` |
-| `datetime12` | `%Y-%m-%d %I:%M %p` | `2026-01-30 06:00 PM` |
+| `time12` | `%-I:%M%P` | `6:00pm` |
+| `datetime12` | `%Y-%m-%d %-I:%M%P` | `2026-01-30 6:00pm` |
 | `full` | `%A, %-d %B %Y at %H:%M %Z` | `Friday, 30 January 2026 at 18:00 GMT` |
-| `full12` | `%A, %-d %B %Y at %I:%M %p %Z` | `Friday, 30 January 2026 at 06:00 PM GMT` |
+| `full12` | `%A, %-d %B %Y at %-I:%M%P %Z` | `Friday, 30 January 2026 at 6:00pm GMT` |
 
-If no `format` is given, `datetime` is used. The `12` variants use 12-hour clock with uppercase AM/PM (`%p`). For lowercase, use a custom format string with `%P`.
+If no `format` is given, `datetime` is used. The `12` variants use 12-hour clock with no leading zero and lowercase am/pm (e.g. `1:00pm`). For uppercase AM/PM or zero-padding, use a custom format string with `%p` and `%I`.
 
 ```
 {{< localtime 2026-01-30 13:00 EST format="full" >}}

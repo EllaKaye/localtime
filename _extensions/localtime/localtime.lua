@@ -232,7 +232,7 @@ var zone=isNaN(Number(tz))?tz:Number(tz);
 var dt=luxon.DateTime.fromISO(el.getAttribute('data-datetime'),{zone:zone}).toLocal();
 if(!dt.isValid){return;}
 var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';
-var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',datetime12:'%Y-%m-%d %I:%M %p',full:'%A, %-d %B %Y at %H:%M %Z',full12:'%A, %-d %B %Y at %I:%M %p %Z'};
+var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%-I:%M%P',datetime12:'%Y-%m-%d %-I:%M%P',full:'%A, %-d %B %Y at %H:%M %Z',full12:'%A, %-d %B %Y at %-I:%M%P %Z'};
 if(P[fmt])fmt=P[fmt];
 var pad=function(n){return String(n).padStart(2,'0');};
 var h=dt.hour,mi=dt.minute;
