@@ -222,7 +222,9 @@ return {
 
     -- Inline JS: reads data attributes, converts timezone, formats with Luxon.
     -- Zone attribute is either an IANA name (string) or offset in minutes (number).
-    -- Format string uses strftime-style tokens (%Y, %m, %H, %-H, etc.) translated to Luxon.
+    -- Format string uses strftime-style tokens (%Y, %m, %H, %-H, etc.) substituted
+    -- directly — avoiding Luxon's toFormat() for the full string, which would
+    -- misinterpret literal text containing Luxon token letters (e.g. "at" → a=AM/PM, t=time).
     local js = [[(function(){var el=document.getElementById(']] .. id .. [[');
 if(typeof luxon==='undefined'){return;}
 var tz=el.getAttribute('data-tz');
@@ -232,9 +234,19 @@ if(!dt.isValid){return;}
 var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';
 var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',datetime12:'%Y-%m-%d %I:%M %p',full:'%A, %-d %B %Y at %H:%M %Z',full12:'%A, %-d %B %Y at %I:%M %p %Z'};
 if(P[fmt])fmt=P[fmt];
-var apl=dt.hour<12?'am':'pm';fmt=fmt.replace(/%P/g,"'"+apl+"'");
-var lf=fmt.replace(/%-d/g,'d').replace(/%d/g,'dd').replace(/%-H/g,'H').replace(/%H/g,'HH').replace(/%-I/g,'h').replace(/%I/g,'hh').replace(/%-M/g,'m').replace(/%M/g,'mm').replace(/%-m/g,'M').replace(/%m/g,'MM').replace(/%Y/g,'yyyy').replace(/%p/g,'a').replace(/%A/g,'EEEE').replace(/%a/g,'EEE').replace(/%B/g,'MMMM').replace(/%b/g,'MMM').replace(/%Z/g,'z');
-el.textContent=dt.toFormat(lf);})();]]
+var pad=function(n){return String(n).padStart(2,'0');};
+var h=dt.hour,mi=dt.minute;
+el.textContent=fmt
+  .replace(/%Y/g,String(dt.year))
+  .replace(/%-m/g,String(dt.month)).replace(/%m/g,pad(dt.month))
+  .replace(/%-d/g,String(dt.day)).replace(/%d/g,pad(dt.day))
+  .replace(/%-H/g,String(h)).replace(/%H/g,pad(h))
+  .replace(/%-I/g,String(h%12||12)).replace(/%I/g,pad(h%12||12))
+  .replace(/%-M/g,String(mi)).replace(/%M/g,pad(mi))
+  .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
+  .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
+  .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
+  .replace(/%Z/g,dt.toFormat('z'));})();]]
 
     local html = luxon_tag ..
       '<span id="' .. id .. '" class="localtime"' ..
