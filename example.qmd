@@ -12,11 +12,21 @@ The "Renders as" column below updates to your local time when the page loads.
 |---|---|
 | `{{</* localtime 2026-01-30 13:00 UTC */>}}` | {{< localtime 2026-01-30 13:00 UTC >}} |
 | `{{</* localtime 2026-01-30 13:00 EST */>}}` | {{< localtime 2026-01-30 13:00 EST >}} |
+| `{{</* localtime 2026-03-12 13:00 EST */>}}` | {{< localtime 2026-03-12 13:00 EST >}} |
 | `{{</* localtime 2026-01-30 09:00 CET */>}}` | {{< localtime 2026-01-30 09:00 CET >}} |
 | `{{</* localtime 2026-01-30 13:00 -05:00 */>}}` | {{< localtime 2026-01-30 13:00 -05:00 >}} |
 | `{{</* localtime 2026-06-15 09:00 UTC */>}}` | {{< localtime 2026-06-15 09:00 UTC >}} |
 | `{{</* localtime 2026-01-30 13:00 UTC format="full" */>}}` | {{< localtime 2026-01-30 13:00 UTC format="full" >}} |
 | `{{</* localtime 2026-01-30 13:00 UTC format="%d %B at %H:%M" */>}}` | {{< localtime 2026-01-30 13:00 UTC format="%d %B at %H:%M" >}} |
+
+## 12-hour time input
+
+| Shortcode | Renders locally as |
+|---|---|
+| `{{</* localtime 2026-01-30 1:00pm EST */>}}` | {{< localtime 2026-01-30 1:00pm EST >}} |
+| `{{</* localtime 2026-01-30 1:00 PM EST */>}}` | {{< localtime 2026-01-30 1:00 PM EST >}} |
+| `{{</* localtime 2026-01-30 12:00am UTC */>}}` | {{< localtime 2026-01-30 12:00am UTC >}} |
+| `{{</* localtime 2026-01-30 12:00pm UTC */>}}` | {{< localtime 2026-01-30 12:00pm UTC >}} |
 
 ## Format presets
 
@@ -26,7 +36,9 @@ The "Renders as" column below updates to your local time when the page loads.
 | `{{</* localtime 2026-01-30 13:00 UTC format="time" */>}}` | {{< localtime 2026-01-30 13:00 UTC format="time" >}} |
 | `{{</* localtime 2026-01-30 13:00 UTC format="time12" */>}}` | {{< localtime 2026-01-30 13:00 UTC format="time12" >}} |
 | `{{</* localtime 2026-01-30 13:00 UTC format="datetime" */>}}` | {{< localtime 2026-01-30 13:00 UTC format="datetime" >}} |
+| `{{</* localtime 2026-01-30 13:00 UTC format="datetime12" */>}}` | {{< localtime 2026-01-30 13:00 UTC format="datetime12" >}} |
 | `{{</* localtime 2026-01-30 13:00 UTC format="full" */>}}` | {{< localtime 2026-01-30 13:00 UTC format="full" >}} |
+| `{{</* localtime 2026-01-30 13:00 UTC format="full12" */>}}` | {{< localtime 2026-01-30 13:00 UTC format="full12" >}} |
 
 ## Custom format strings
 
@@ -35,19 +47,45 @@ The "Renders as" column below updates to your local time when the page loads.
 | `{{</* localtime 2026-01-30 13:00 UTC format="%H:%M" */>}}` | {{< localtime 2026-01-30 13:00 UTC format="%H:%M" >}} |
 | `{{</* localtime 2026-01-30 13:00 UTC format="%d %B %Y" */>}}` | {{< localtime 2026-01-30 13:00 UTC format="%d %B %Y" >}} |
 | `{{</* localtime 2026-01-30 13:00 UTC format="%I:%M %p" */>}}` | {{< localtime 2026-01-30 13:00 UTC format="%I:%M %p" >}} |
+| `{{</* localtime 2026-01-30 13:00 UTC format="%I:%M %P" */>}}` | {{< localtime 2026-01-30 13:00 UTC format="%I:%M %P" >}} |
 | `{{</* localtime 2026-01-30 13:00 UTC format="%A, %d %B %Y at %H:%M %Z" */>}}` | {{< localtime 2026-01-30 13:00 UTC format="%A, %d %B %Y at %H:%M %Z" >}} |
+
+## No-padding format tokens
+
+Use `%-` variants to suppress zero-padding on numeric fields.
+
+| Shortcode | Renders locally as |
+|---|---|
+| `{{</* localtime 2026-01-03 08:05 UTC format="%d %B %Y at %H:%M" */>}}` | {{< localtime 2026-01-03 08:05 UTC format="%d %B %Y at %H:%M" >}} |
+| `{{</* localtime 2026-01-03 08:05 UTC format="%-d %B %Y at %-H:%M" */>}}` | {{< localtime 2026-01-03 08:05 UTC format="%-d %B %Y at %-H:%M" >}} |
+| `{{</* localtime 2026-01-03 08:05 UTC format="%-d %b %Y, %-I:%M %p" */>}}` | {{< localtime 2026-01-03 08:05 UTC format="%-d %b %Y, %-I:%M %p" >}} |
+
+The first row uses `%d` and `%H` (zero-padded), the second uses `%-d` and `%-H` (no padding).
+
+## IANA timezone names
+
+Any IANA timezone name can be used directly. Unlike abbreviations, IANA names are unambiguous and the browser handles DST automatically.
+
+| Shortcode | Renders locally as |
+|---|---|
+| `{{</* localtime 2026-01-30 13:00 America/New_York */>}}` | {{< localtime 2026-01-30 13:00 America/New_York >}} |
+| `{{</* localtime 2026-07-15 13:00 America/New_York */>}}` | {{< localtime 2026-07-15 13:00 America/New_York >}} |
+| `{{</* localtime 2026-01-30 09:00 Europe/Paris */>}}` | {{< localtime 2026-01-30 09:00 Europe/Paris >}} |
+| `{{</* localtime 2026-07-15 09:00 Europe/Paris */>}}` | {{< localtime 2026-07-15 09:00 Europe/Paris >}} |
+| `{{</* localtime 2026-01-30 10:00 Australia/Sydney */>}}` | {{< localtime 2026-01-30 10:00 Australia/Sydney >}} |
+
+The January and July rows for the same timezone show different UTC offsets because the browser applies the correct DST offset for each date.
 
 ## Supported timezone formats
 
 - Common abbreviations: `UTC`, `GMT`, `EST`, `EDT`, `CST`, `CDT`, `MST`, `MDT`, `PST`, `PDT`, `CET`, `CEST`, `BST`, `JST`, `AEST`, `AEDT`, `NZST`, `NZDT`, and more
+- IANA timezone names: `America/New_York`, `Europe/Paris`, `Asia/Tokyo`, etc.
 - UTC offsets: `+05:30`, `-08:00`, `+0530`, `-8`
 - Prefixed offsets: `UTC+5`, `UTC-8`, `GMT+1`
 
-## DST auto-correction
+## DST handling
 
-For common DST-observing timezone pairs, the extension automatically applies the
-correct offset based on the date. Writing `CET` for a summer date uses CEST (+02:00);
-writing `EST` for a summer date uses EDT (-04:00).
+DST is handled automatically in the reader's browser. Common abbreviations that observe DST (e.g. `EST`, `CET`) are mapped to their IANA timezone, and the browser applies the correct offset for each specific date.
 
 | Shortcode | Renders locally as |
 |---|---|
@@ -55,3 +93,5 @@ writing `EST` for a summer date uses EDT (-04:00).
 | `{{</* localtime 2026-01-15 14:00 CET */>}}` | {{< localtime 2026-01-15 14:00 CET >}} |
 | `{{</* localtime 2026-07-15 09:00 EST */>}}` | {{< localtime 2026-07-15 09:00 EST >}} |
 | `{{</* localtime 2026-01-15 09:00 EST */>}}` | {{< localtime 2026-01-15 09:00 EST >}} |
+
+The July and January rows for the same abbreviation use different offsets (e.g. CEST vs CET, EDT vs EST) because the browser's timezone database applies the correct rule for each date.
