@@ -81,45 +81,345 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td><code>{{&lt; localtime 2026-01-30 13:00 UTC &gt;}}</code></td>
-<td><p><span id="localtime-1" class="localtime" data-utc="2026-01-30T13:00:00Z" data-format="">2026-01-30 13:00 UTC</span><script>
-(function(){var el=document.getElementById('localtime-1');var d=new Date(el.getAttribute('data-utc'));var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',full:'%A, %d %B %Y at %H:%M %Z'};if(P[fmt])fmt=P[fmt];function pad(n){return String(n).padStart(2,'0');}var y=d.getFullYear(),mo=d.getMonth()+1,dy=d.getDate(),h=d.getHours(),mi=d.getMinutes(),h12=h%12||12,ap=h<12?'AM':'PM';var tzPart=Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(d).find(function(p){return p.type==='timeZoneName';});var tz=tzPart?tzPart.value:'';el.textContent=fmt.replace(/%Y/g,y).replace(/%m/g,pad(mo)).replace(/%d/g,pad(dy)).replace(/%H/g,pad(h)).replace(/%I/g,pad(h12)).replace(/%M/g,pad(mi)).replace(/%p/g,ap).replace(/%B/g,new Intl.DateTimeFormat(undefined,{month:'long'}).format(d)).replace(/%b/g,new Intl.DateTimeFormat(undefined,{month:'short'}).format(d)).replace(/%A/g,new Intl.DateTimeFormat(undefined,{weekday:'long'}).format(d)).replace(/%a/g,new Intl.DateTimeFormat(undefined,{weekday:'short'}).format(d)).replace(/%Z/g,tz);})();
-</script></p></td>
+<td><p><script src="https://cdn.jsdelivr.net/npm/luxon@3/build/global/luxon.min.js"></script><span id="localtime-1" class="localtime" data-datetime="2026-01-30T13:00" data-tz="UTC" data-format="">2026-01-30 13:00 UTC</span><script>(function(){var el=document.getElementById('localtime-1');
+if(typeof luxon==='undefined'){return;}
+var tz=el.getAttribute('data-tz');
+var zone=isNaN(Number(tz))?tz:Number(tz);
+var dt=luxon.DateTime.fromISO(el.getAttribute('data-datetime'),{zone:zone}).toLocal();
+if(!dt.isValid){return;}
+var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';
+var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',datetime12:'%Y-%m-%d %I:%M %p',full:'%A, %-d %B %Y at %H:%M %Z',full12:'%A, %-d %B %Y at %I:%M %p %Z'};
+if(P[fmt])fmt=P[fmt];
+var pad=function(n){return String(n).padStart(2,'0');};
+var h=dt.hour,mi=dt.minute;
+el.textContent=fmt
+  .replace(/%Y/g,String(dt.year))
+  .replace(/%-m/g,String(dt.month)).replace(/%m/g,pad(dt.month))
+  .replace(/%-d/g,String(dt.day)).replace(/%d/g,pad(dt.day))
+  .replace(/%-H/g,String(h)).replace(/%H/g,pad(h))
+  .replace(/%-I/g,String(h%12||12)).replace(/%I/g,pad(h%12||12))
+  .replace(/%-M/g,String(mi)).replace(/%M/g,pad(mi))
+  .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
+  .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
+  .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
+  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
 </tr>
 <tr class="even">
 <td><code>{{&lt; localtime 2026-01-30 13:00 EST &gt;}}</code></td>
-<td><p><span id="localtime-2" class="localtime" data-utc="2026-01-30T18:00:00Z" data-format="">2026-01-30 13:00 EST</span><script>
-(function(){var el=document.getElementById('localtime-2');var d=new Date(el.getAttribute('data-utc'));var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',full:'%A, %d %B %Y at %H:%M %Z'};if(P[fmt])fmt=P[fmt];function pad(n){return String(n).padStart(2,'0');}var y=d.getFullYear(),mo=d.getMonth()+1,dy=d.getDate(),h=d.getHours(),mi=d.getMinutes(),h12=h%12||12,ap=h<12?'AM':'PM';var tzPart=Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(d).find(function(p){return p.type==='timeZoneName';});var tz=tzPart?tzPart.value:'';el.textContent=fmt.replace(/%Y/g,y).replace(/%m/g,pad(mo)).replace(/%d/g,pad(dy)).replace(/%H/g,pad(h)).replace(/%I/g,pad(h12)).replace(/%M/g,pad(mi)).replace(/%p/g,ap).replace(/%B/g,new Intl.DateTimeFormat(undefined,{month:'long'}).format(d)).replace(/%b/g,new Intl.DateTimeFormat(undefined,{month:'short'}).format(d)).replace(/%A/g,new Intl.DateTimeFormat(undefined,{weekday:'long'}).format(d)).replace(/%a/g,new Intl.DateTimeFormat(undefined,{weekday:'short'}).format(d)).replace(/%Z/g,tz);})();
-</script></p></td>
+<td><p><span id="localtime-2" class="localtime" data-datetime="2026-01-30T13:00" data-tz="America/New_York" data-format="">2026-01-30 13:00 EST</span><script>(function(){var el=document.getElementById('localtime-2');
+if(typeof luxon==='undefined'){return;}
+var tz=el.getAttribute('data-tz');
+var zone=isNaN(Number(tz))?tz:Number(tz);
+var dt=luxon.DateTime.fromISO(el.getAttribute('data-datetime'),{zone:zone}).toLocal();
+if(!dt.isValid){return;}
+var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';
+var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',datetime12:'%Y-%m-%d %I:%M %p',full:'%A, %-d %B %Y at %H:%M %Z',full12:'%A, %-d %B %Y at %I:%M %p %Z'};
+if(P[fmt])fmt=P[fmt];
+var pad=function(n){return String(n).padStart(2,'0');};
+var h=dt.hour,mi=dt.minute;
+el.textContent=fmt
+  .replace(/%Y/g,String(dt.year))
+  .replace(/%-m/g,String(dt.month)).replace(/%m/g,pad(dt.month))
+  .replace(/%-d/g,String(dt.day)).replace(/%d/g,pad(dt.day))
+  .replace(/%-H/g,String(h)).replace(/%H/g,pad(h))
+  .replace(/%-I/g,String(h%12||12)).replace(/%I/g,pad(h%12||12))
+  .replace(/%-M/g,String(mi)).replace(/%M/g,pad(mi))
+  .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
+  .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
+  .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
+  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
+</tr>
+<tr class="odd">
+<td><code>{{&lt; localtime 2026-03-12 13:00 EST &gt;}}</code></td>
+<td><p><span id="localtime-3" class="localtime" data-datetime="2026-03-12T13:00" data-tz="America/New_York" data-format="">2026-03-12 13:00 EST</span><script>(function(){var el=document.getElementById('localtime-3');
+if(typeof luxon==='undefined'){return;}
+var tz=el.getAttribute('data-tz');
+var zone=isNaN(Number(tz))?tz:Number(tz);
+var dt=luxon.DateTime.fromISO(el.getAttribute('data-datetime'),{zone:zone}).toLocal();
+if(!dt.isValid){return;}
+var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';
+var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',datetime12:'%Y-%m-%d %I:%M %p',full:'%A, %-d %B %Y at %H:%M %Z',full12:'%A, %-d %B %Y at %I:%M %p %Z'};
+if(P[fmt])fmt=P[fmt];
+var pad=function(n){return String(n).padStart(2,'0');};
+var h=dt.hour,mi=dt.minute;
+el.textContent=fmt
+  .replace(/%Y/g,String(dt.year))
+  .replace(/%-m/g,String(dt.month)).replace(/%m/g,pad(dt.month))
+  .replace(/%-d/g,String(dt.day)).replace(/%d/g,pad(dt.day))
+  .replace(/%-H/g,String(h)).replace(/%H/g,pad(h))
+  .replace(/%-I/g,String(h%12||12)).replace(/%I/g,pad(h%12||12))
+  .replace(/%-M/g,String(mi)).replace(/%M/g,pad(mi))
+  .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
+  .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
+  .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
+  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
+</tr>
+<tr class="even">
+<td><code>{{&lt; localtime 2026-07-30 13:00 EST &gt;}}</code></td>
+<td><p><span id="localtime-4" class="localtime" data-datetime="2026-07-30T13:00" data-tz="America/New_York" data-format="">2026-07-30 13:00 EST</span><script>(function(){var el=document.getElementById('localtime-4');
+if(typeof luxon==='undefined'){return;}
+var tz=el.getAttribute('data-tz');
+var zone=isNaN(Number(tz))?tz:Number(tz);
+var dt=luxon.DateTime.fromISO(el.getAttribute('data-datetime'),{zone:zone}).toLocal();
+if(!dt.isValid){return;}
+var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';
+var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',datetime12:'%Y-%m-%d %I:%M %p',full:'%A, %-d %B %Y at %H:%M %Z',full12:'%A, %-d %B %Y at %I:%M %p %Z'};
+if(P[fmt])fmt=P[fmt];
+var pad=function(n){return String(n).padStart(2,'0');};
+var h=dt.hour,mi=dt.minute;
+el.textContent=fmt
+  .replace(/%Y/g,String(dt.year))
+  .replace(/%-m/g,String(dt.month)).replace(/%m/g,pad(dt.month))
+  .replace(/%-d/g,String(dt.day)).replace(/%d/g,pad(dt.day))
+  .replace(/%-H/g,String(h)).replace(/%H/g,pad(h))
+  .replace(/%-I/g,String(h%12||12)).replace(/%I/g,pad(h%12||12))
+  .replace(/%-M/g,String(mi)).replace(/%M/g,pad(mi))
+  .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
+  .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
+  .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
+  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
 </tr>
 <tr class="odd">
 <td><code>{{&lt; localtime 2026-01-30 09:00 CET &gt;}}</code></td>
-<td><p><span id="localtime-3" class="localtime" data-utc="2026-01-30T08:00:00Z" data-format="">2026-01-30 09:00 CET</span><script>
-(function(){var el=document.getElementById('localtime-3');var d=new Date(el.getAttribute('data-utc'));var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',full:'%A, %d %B %Y at %H:%M %Z'};if(P[fmt])fmt=P[fmt];function pad(n){return String(n).padStart(2,'0');}var y=d.getFullYear(),mo=d.getMonth()+1,dy=d.getDate(),h=d.getHours(),mi=d.getMinutes(),h12=h%12||12,ap=h<12?'AM':'PM';var tzPart=Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(d).find(function(p){return p.type==='timeZoneName';});var tz=tzPart?tzPart.value:'';el.textContent=fmt.replace(/%Y/g,y).replace(/%m/g,pad(mo)).replace(/%d/g,pad(dy)).replace(/%H/g,pad(h)).replace(/%I/g,pad(h12)).replace(/%M/g,pad(mi)).replace(/%p/g,ap).replace(/%B/g,new Intl.DateTimeFormat(undefined,{month:'long'}).format(d)).replace(/%b/g,new Intl.DateTimeFormat(undefined,{month:'short'}).format(d)).replace(/%A/g,new Intl.DateTimeFormat(undefined,{weekday:'long'}).format(d)).replace(/%a/g,new Intl.DateTimeFormat(undefined,{weekday:'short'}).format(d)).replace(/%Z/g,tz);})();
-</script></p></td>
+<td><p><span id="localtime-5" class="localtime" data-datetime="2026-01-30T09:00" data-tz="Europe/Paris" data-format="">2026-01-30 09:00 CET</span><script>(function(){var el=document.getElementById('localtime-5');
+if(typeof luxon==='undefined'){return;}
+var tz=el.getAttribute('data-tz');
+var zone=isNaN(Number(tz))?tz:Number(tz);
+var dt=luxon.DateTime.fromISO(el.getAttribute('data-datetime'),{zone:zone}).toLocal();
+if(!dt.isValid){return;}
+var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';
+var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',datetime12:'%Y-%m-%d %I:%M %p',full:'%A, %-d %B %Y at %H:%M %Z',full12:'%A, %-d %B %Y at %I:%M %p %Z'};
+if(P[fmt])fmt=P[fmt];
+var pad=function(n){return String(n).padStart(2,'0');};
+var h=dt.hour,mi=dt.minute;
+el.textContent=fmt
+  .replace(/%Y/g,String(dt.year))
+  .replace(/%-m/g,String(dt.month)).replace(/%m/g,pad(dt.month))
+  .replace(/%-d/g,String(dt.day)).replace(/%d/g,pad(dt.day))
+  .replace(/%-H/g,String(h)).replace(/%H/g,pad(h))
+  .replace(/%-I/g,String(h%12||12)).replace(/%I/g,pad(h%12||12))
+  .replace(/%-M/g,String(mi)).replace(/%M/g,pad(mi))
+  .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
+  .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
+  .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
+  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
 </tr>
 <tr class="even">
 <td><code>{{&lt; localtime 2026-01-30 13:00 -05:00 &gt;}}</code></td>
-<td><p><span id="localtime-4" class="localtime" data-utc="2026-01-30T18:00:00Z" data-format="">2026-01-30 13:00 -05:00</span><script>
-(function(){var el=document.getElementById('localtime-4');var d=new Date(el.getAttribute('data-utc'));var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',full:'%A, %d %B %Y at %H:%M %Z'};if(P[fmt])fmt=P[fmt];function pad(n){return String(n).padStart(2,'0');}var y=d.getFullYear(),mo=d.getMonth()+1,dy=d.getDate(),h=d.getHours(),mi=d.getMinutes(),h12=h%12||12,ap=h<12?'AM':'PM';var tzPart=Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(d).find(function(p){return p.type==='timeZoneName';});var tz=tzPart?tzPart.value:'';el.textContent=fmt.replace(/%Y/g,y).replace(/%m/g,pad(mo)).replace(/%d/g,pad(dy)).replace(/%H/g,pad(h)).replace(/%I/g,pad(h12)).replace(/%M/g,pad(mi)).replace(/%p/g,ap).replace(/%B/g,new Intl.DateTimeFormat(undefined,{month:'long'}).format(d)).replace(/%b/g,new Intl.DateTimeFormat(undefined,{month:'short'}).format(d)).replace(/%A/g,new Intl.DateTimeFormat(undefined,{weekday:'long'}).format(d)).replace(/%a/g,new Intl.DateTimeFormat(undefined,{weekday:'short'}).format(d)).replace(/%Z/g,tz);})();
-</script></p></td>
+<td><p><span id="localtime-6" class="localtime" data-datetime="2026-01-30T13:00" data-tz="-300" data-format="">2026-01-30 13:00 -05:00</span><script>(function(){var el=document.getElementById('localtime-6');
+if(typeof luxon==='undefined'){return;}
+var tz=el.getAttribute('data-tz');
+var zone=isNaN(Number(tz))?tz:Number(tz);
+var dt=luxon.DateTime.fromISO(el.getAttribute('data-datetime'),{zone:zone}).toLocal();
+if(!dt.isValid){return;}
+var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';
+var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',datetime12:'%Y-%m-%d %I:%M %p',full:'%A, %-d %B %Y at %H:%M %Z',full12:'%A, %-d %B %Y at %I:%M %p %Z'};
+if(P[fmt])fmt=P[fmt];
+var pad=function(n){return String(n).padStart(2,'0');};
+var h=dt.hour,mi=dt.minute;
+el.textContent=fmt
+  .replace(/%Y/g,String(dt.year))
+  .replace(/%-m/g,String(dt.month)).replace(/%m/g,pad(dt.month))
+  .replace(/%-d/g,String(dt.day)).replace(/%d/g,pad(dt.day))
+  .replace(/%-H/g,String(h)).replace(/%H/g,pad(h))
+  .replace(/%-I/g,String(h%12||12)).replace(/%I/g,pad(h%12||12))
+  .replace(/%-M/g,String(mi)).replace(/%M/g,pad(mi))
+  .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
+  .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
+  .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
+  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
 </tr>
 <tr class="odd">
 <td><code>{{&lt; localtime 2026-06-15 09:00 UTC &gt;}}</code></td>
-<td><p><span id="localtime-5" class="localtime" data-utc="2026-06-15T09:00:00Z" data-format="">2026-06-15 09:00 UTC</span><script>
-(function(){var el=document.getElementById('localtime-5');var d=new Date(el.getAttribute('data-utc'));var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',full:'%A, %d %B %Y at %H:%M %Z'};if(P[fmt])fmt=P[fmt];function pad(n){return String(n).padStart(2,'0');}var y=d.getFullYear(),mo=d.getMonth()+1,dy=d.getDate(),h=d.getHours(),mi=d.getMinutes(),h12=h%12||12,ap=h<12?'AM':'PM';var tzPart=Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(d).find(function(p){return p.type==='timeZoneName';});var tz=tzPart?tzPart.value:'';el.textContent=fmt.replace(/%Y/g,y).replace(/%m/g,pad(mo)).replace(/%d/g,pad(dy)).replace(/%H/g,pad(h)).replace(/%I/g,pad(h12)).replace(/%M/g,pad(mi)).replace(/%p/g,ap).replace(/%B/g,new Intl.DateTimeFormat(undefined,{month:'long'}).format(d)).replace(/%b/g,new Intl.DateTimeFormat(undefined,{month:'short'}).format(d)).replace(/%A/g,new Intl.DateTimeFormat(undefined,{weekday:'long'}).format(d)).replace(/%a/g,new Intl.DateTimeFormat(undefined,{weekday:'short'}).format(d)).replace(/%Z/g,tz);})();
-</script></p></td>
+<td><p><span id="localtime-7" class="localtime" data-datetime="2026-06-15T09:00" data-tz="UTC" data-format="">2026-06-15 09:00 UTC</span><script>(function(){var el=document.getElementById('localtime-7');
+if(typeof luxon==='undefined'){return;}
+var tz=el.getAttribute('data-tz');
+var zone=isNaN(Number(tz))?tz:Number(tz);
+var dt=luxon.DateTime.fromISO(el.getAttribute('data-datetime'),{zone:zone}).toLocal();
+if(!dt.isValid){return;}
+var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';
+var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',datetime12:'%Y-%m-%d %I:%M %p',full:'%A, %-d %B %Y at %H:%M %Z',full12:'%A, %-d %B %Y at %I:%M %p %Z'};
+if(P[fmt])fmt=P[fmt];
+var pad=function(n){return String(n).padStart(2,'0');};
+var h=dt.hour,mi=dt.minute;
+el.textContent=fmt
+  .replace(/%Y/g,String(dt.year))
+  .replace(/%-m/g,String(dt.month)).replace(/%m/g,pad(dt.month))
+  .replace(/%-d/g,String(dt.day)).replace(/%d/g,pad(dt.day))
+  .replace(/%-H/g,String(h)).replace(/%H/g,pad(h))
+  .replace(/%-I/g,String(h%12||12)).replace(/%I/g,pad(h%12||12))
+  .replace(/%-M/g,String(mi)).replace(/%M/g,pad(mi))
+  .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
+  .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
+  .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
+  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
 </tr>
 <tr class="even">
 <td><code>{{&lt; localtime 2026-01-30 13:00 UTC format="full" &gt;}}</code></td>
-<td><p><span id="localtime-6" class="localtime" data-utc="2026-01-30T13:00:00Z" data-format="full">2026-01-30 13:00 UTC</span><script>
-(function(){var el=document.getElementById('localtime-6');var d=new Date(el.getAttribute('data-utc'));var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',full:'%A, %d %B %Y at %H:%M %Z'};if(P[fmt])fmt=P[fmt];function pad(n){return String(n).padStart(2,'0');}var y=d.getFullYear(),mo=d.getMonth()+1,dy=d.getDate(),h=d.getHours(),mi=d.getMinutes(),h12=h%12||12,ap=h<12?'AM':'PM';var tzPart=Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(d).find(function(p){return p.type==='timeZoneName';});var tz=tzPart?tzPart.value:'';el.textContent=fmt.replace(/%Y/g,y).replace(/%m/g,pad(mo)).replace(/%d/g,pad(dy)).replace(/%H/g,pad(h)).replace(/%I/g,pad(h12)).replace(/%M/g,pad(mi)).replace(/%p/g,ap).replace(/%B/g,new Intl.DateTimeFormat(undefined,{month:'long'}).format(d)).replace(/%b/g,new Intl.DateTimeFormat(undefined,{month:'short'}).format(d)).replace(/%A/g,new Intl.DateTimeFormat(undefined,{weekday:'long'}).format(d)).replace(/%a/g,new Intl.DateTimeFormat(undefined,{weekday:'short'}).format(d)).replace(/%Z/g,tz);})();
-</script></p></td>
+<td><p><span id="localtime-8" class="localtime" data-datetime="2026-01-30T13:00" data-tz="UTC" data-format="full">2026-01-30 13:00 UTC</span><script>(function(){var el=document.getElementById('localtime-8');
+if(typeof luxon==='undefined'){return;}
+var tz=el.getAttribute('data-tz');
+var zone=isNaN(Number(tz))?tz:Number(tz);
+var dt=luxon.DateTime.fromISO(el.getAttribute('data-datetime'),{zone:zone}).toLocal();
+if(!dt.isValid){return;}
+var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';
+var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',datetime12:'%Y-%m-%d %I:%M %p',full:'%A, %-d %B %Y at %H:%M %Z',full12:'%A, %-d %B %Y at %I:%M %p %Z'};
+if(P[fmt])fmt=P[fmt];
+var pad=function(n){return String(n).padStart(2,'0');};
+var h=dt.hour,mi=dt.minute;
+el.textContent=fmt
+  .replace(/%Y/g,String(dt.year))
+  .replace(/%-m/g,String(dt.month)).replace(/%m/g,pad(dt.month))
+  .replace(/%-d/g,String(dt.day)).replace(/%d/g,pad(dt.day))
+  .replace(/%-H/g,String(h)).replace(/%H/g,pad(h))
+  .replace(/%-I/g,String(h%12||12)).replace(/%I/g,pad(h%12||12))
+  .replace(/%-M/g,String(mi)).replace(/%M/g,pad(mi))
+  .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
+  .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
+  .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
+  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
 </tr>
 <tr class="odd">
 <td><code>{{&lt; localtime 2026-01-30 13:00 UTC format="%d %B at %H:%M" &gt;}}</code></td>
-<td><p><span id="localtime-7" class="localtime" data-utc="2026-01-30T13:00:00Z" data-format="%d %B at %H:%M">2026-01-30 13:00 UTC</span><script>
-(function(){var el=document.getElementById('localtime-7');var d=new Date(el.getAttribute('data-utc'));var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',full:'%A, %d %B %Y at %H:%M %Z'};if(P[fmt])fmt=P[fmt];function pad(n){return String(n).padStart(2,'0');}var y=d.getFullYear(),mo=d.getMonth()+1,dy=d.getDate(),h=d.getHours(),mi=d.getMinutes(),h12=h%12||12,ap=h<12?'AM':'PM';var tzPart=Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(d).find(function(p){return p.type==='timeZoneName';});var tz=tzPart?tzPart.value:'';el.textContent=fmt.replace(/%Y/g,y).replace(/%m/g,pad(mo)).replace(/%d/g,pad(dy)).replace(/%H/g,pad(h)).replace(/%I/g,pad(h12)).replace(/%M/g,pad(mi)).replace(/%p/g,ap).replace(/%B/g,new Intl.DateTimeFormat(undefined,{month:'long'}).format(d)).replace(/%b/g,new Intl.DateTimeFormat(undefined,{month:'short'}).format(d)).replace(/%A/g,new Intl.DateTimeFormat(undefined,{weekday:'long'}).format(d)).replace(/%a/g,new Intl.DateTimeFormat(undefined,{weekday:'short'}).format(d)).replace(/%Z/g,tz);})();
-</script></p></td>
+<td><p><span id="localtime-9" class="localtime" data-datetime="2026-01-30T13:00" data-tz="UTC" data-format="%d %B at %H:%M">2026-01-30 13:00 UTC</span><script>(function(){var el=document.getElementById('localtime-9');
+if(typeof luxon==='undefined'){return;}
+var tz=el.getAttribute('data-tz');
+var zone=isNaN(Number(tz))?tz:Number(tz);
+var dt=luxon.DateTime.fromISO(el.getAttribute('data-datetime'),{zone:zone}).toLocal();
+if(!dt.isValid){return;}
+var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';
+var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',datetime12:'%Y-%m-%d %I:%M %p',full:'%A, %-d %B %Y at %H:%M %Z',full12:'%A, %-d %B %Y at %I:%M %p %Z'};
+if(P[fmt])fmt=P[fmt];
+var pad=function(n){return String(n).padStart(2,'0');};
+var h=dt.hour,mi=dt.minute;
+el.textContent=fmt
+  .replace(/%Y/g,String(dt.year))
+  .replace(/%-m/g,String(dt.month)).replace(/%m/g,pad(dt.month))
+  .replace(/%-d/g,String(dt.day)).replace(/%d/g,pad(dt.day))
+  .replace(/%-H/g,String(h)).replace(/%H/g,pad(h))
+  .replace(/%-I/g,String(h%12||12)).replace(/%I/g,pad(h%12||12))
+  .replace(/%-M/g,String(mi)).replace(/%M/g,pad(mi))
+  .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
+  .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
+  .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
+  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="hour-time-input" class="level2">
+<h2 class="anchored" data-anchor-id="hour-time-input">12-hour time input</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Shortcode</th>
+<th>Renders locally as</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>{{&lt; localtime 2026-01-30 1:00pm EST &gt;}}</code></td>
+<td><p><span id="localtime-10" class="localtime" data-datetime="2026-01-30T13:00" data-tz="America/New_York" data-format="">2026-01-30 1:00pm EST</span><script>(function(){var el=document.getElementById('localtime-10');
+if(typeof luxon==='undefined'){return;}
+var tz=el.getAttribute('data-tz');
+var zone=isNaN(Number(tz))?tz:Number(tz);
+var dt=luxon.DateTime.fromISO(el.getAttribute('data-datetime'),{zone:zone}).toLocal();
+if(!dt.isValid){return;}
+var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';
+var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',datetime12:'%Y-%m-%d %I:%M %p',full:'%A, %-d %B %Y at %H:%M %Z',full12:'%A, %-d %B %Y at %I:%M %p %Z'};
+if(P[fmt])fmt=P[fmt];
+var pad=function(n){return String(n).padStart(2,'0');};
+var h=dt.hour,mi=dt.minute;
+el.textContent=fmt
+  .replace(/%Y/g,String(dt.year))
+  .replace(/%-m/g,String(dt.month)).replace(/%m/g,pad(dt.month))
+  .replace(/%-d/g,String(dt.day)).replace(/%d/g,pad(dt.day))
+  .replace(/%-H/g,String(h)).replace(/%H/g,pad(h))
+  .replace(/%-I/g,String(h%12||12)).replace(/%I/g,pad(h%12||12))
+  .replace(/%-M/g,String(mi)).replace(/%M/g,pad(mi))
+  .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
+  .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
+  .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
+  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
+</tr>
+<tr class="even">
+<td><code>{{&lt; localtime 2026-01-30 1:00 PM EST &gt;}}</code></td>
+<td><p><span id="localtime-11" class="localtime" data-datetime="2026-01-30T13:00" data-tz="America/New_York" data-format="">2026-01-30 1:00 PM EST</span><script>(function(){var el=document.getElementById('localtime-11');
+if(typeof luxon==='undefined'){return;}
+var tz=el.getAttribute('data-tz');
+var zone=isNaN(Number(tz))?tz:Number(tz);
+var dt=luxon.DateTime.fromISO(el.getAttribute('data-datetime'),{zone:zone}).toLocal();
+if(!dt.isValid){return;}
+var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';
+var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',datetime12:'%Y-%m-%d %I:%M %p',full:'%A, %-d %B %Y at %H:%M %Z',full12:'%A, %-d %B %Y at %I:%M %p %Z'};
+if(P[fmt])fmt=P[fmt];
+var pad=function(n){return String(n).padStart(2,'0');};
+var h=dt.hour,mi=dt.minute;
+el.textContent=fmt
+  .replace(/%Y/g,String(dt.year))
+  .replace(/%-m/g,String(dt.month)).replace(/%m/g,pad(dt.month))
+  .replace(/%-d/g,String(dt.day)).replace(/%d/g,pad(dt.day))
+  .replace(/%-H/g,String(h)).replace(/%H/g,pad(h))
+  .replace(/%-I/g,String(h%12||12)).replace(/%I/g,pad(h%12||12))
+  .replace(/%-M/g,String(mi)).replace(/%M/g,pad(mi))
+  .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
+  .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
+  .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
+  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
+</tr>
+<tr class="odd">
+<td><code>{{&lt; localtime 2026-01-30 12:00am UTC &gt;}}</code></td>
+<td><p><span id="localtime-12" class="localtime" data-datetime="2026-01-30T00:00" data-tz="UTC" data-format="">2026-01-30 12:00am UTC</span><script>(function(){var el=document.getElementById('localtime-12');
+if(typeof luxon==='undefined'){return;}
+var tz=el.getAttribute('data-tz');
+var zone=isNaN(Number(tz))?tz:Number(tz);
+var dt=luxon.DateTime.fromISO(el.getAttribute('data-datetime'),{zone:zone}).toLocal();
+if(!dt.isValid){return;}
+var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';
+var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',datetime12:'%Y-%m-%d %I:%M %p',full:'%A, %-d %B %Y at %H:%M %Z',full12:'%A, %-d %B %Y at %I:%M %p %Z'};
+if(P[fmt])fmt=P[fmt];
+var pad=function(n){return String(n).padStart(2,'0');};
+var h=dt.hour,mi=dt.minute;
+el.textContent=fmt
+  .replace(/%Y/g,String(dt.year))
+  .replace(/%-m/g,String(dt.month)).replace(/%m/g,pad(dt.month))
+  .replace(/%-d/g,String(dt.day)).replace(/%d/g,pad(dt.day))
+  .replace(/%-H/g,String(h)).replace(/%H/g,pad(h))
+  .replace(/%-I/g,String(h%12||12)).replace(/%I/g,pad(h%12||12))
+  .replace(/%-M/g,String(mi)).replace(/%M/g,pad(mi))
+  .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
+  .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
+  .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
+  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
+</tr>
+<tr class="even">
+<td><code>{{&lt; localtime 2026-01-30 12:00pm UTC &gt;}}</code></td>
+<td><p><span id="localtime-13" class="localtime" data-datetime="2026-01-30T12:00" data-tz="UTC" data-format="">2026-01-30 12:00pm UTC</span><script>(function(){var el=document.getElementById('localtime-13');
+if(typeof luxon==='undefined'){return;}
+var tz=el.getAttribute('data-tz');
+var zone=isNaN(Number(tz))?tz:Number(tz);
+var dt=luxon.DateTime.fromISO(el.getAttribute('data-datetime'),{zone:zone}).toLocal();
+if(!dt.isValid){return;}
+var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';
+var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',datetime12:'%Y-%m-%d %I:%M %p',full:'%A, %-d %B %Y at %H:%M %Z',full12:'%A, %-d %B %Y at %I:%M %p %Z'};
+if(P[fmt])fmt=P[fmt];
+var pad=function(n){return String(n).padStart(2,'0');};
+var h=dt.hour,mi=dt.minute;
+el.textContent=fmt
+  .replace(/%Y/g,String(dt.year))
+  .replace(/%-m/g,String(dt.month)).replace(/%m/g,pad(dt.month))
+  .replace(/%-d/g,String(dt.day)).replace(/%d/g,pad(dt.day))
+  .replace(/%-H/g,String(h)).replace(/%H/g,pad(h))
+  .replace(/%-I/g,String(h%12||12)).replace(/%I/g,pad(h%12||12))
+  .replace(/%-M/g,String(mi)).replace(/%M/g,pad(mi))
+  .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
+  .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
+  .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
+  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
 </tr>
 </tbody>
 </table>
@@ -140,33 +440,178 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td><code>{{&lt; localtime 2026-01-30 13:00 UTC format="date" &gt;}}</code></td>
-<td><p><span id="localtime-8" class="localtime" data-utc="2026-01-30T13:00:00Z" data-format="date">2026-01-30 13:00 UTC</span><script>
-(function(){var el=document.getElementById('localtime-8');var d=new Date(el.getAttribute('data-utc'));var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',full:'%A, %d %B %Y at %H:%M %Z'};if(P[fmt])fmt=P[fmt];function pad(n){return String(n).padStart(2,'0');}var y=d.getFullYear(),mo=d.getMonth()+1,dy=d.getDate(),h=d.getHours(),mi=d.getMinutes(),h12=h%12||12,ap=h<12?'AM':'PM';var tzPart=Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(d).find(function(p){return p.type==='timeZoneName';});var tz=tzPart?tzPart.value:'';el.textContent=fmt.replace(/%Y/g,y).replace(/%m/g,pad(mo)).replace(/%d/g,pad(dy)).replace(/%H/g,pad(h)).replace(/%I/g,pad(h12)).replace(/%M/g,pad(mi)).replace(/%p/g,ap).replace(/%B/g,new Intl.DateTimeFormat(undefined,{month:'long'}).format(d)).replace(/%b/g,new Intl.DateTimeFormat(undefined,{month:'short'}).format(d)).replace(/%A/g,new Intl.DateTimeFormat(undefined,{weekday:'long'}).format(d)).replace(/%a/g,new Intl.DateTimeFormat(undefined,{weekday:'short'}).format(d)).replace(/%Z/g,tz);})();
-</script></p></td>
+<td><p><span id="localtime-14" class="localtime" data-datetime="2026-01-30T13:00" data-tz="UTC" data-format="date">2026-01-30 13:00 UTC</span><script>(function(){var el=document.getElementById('localtime-14');
+if(typeof luxon==='undefined'){return;}
+var tz=el.getAttribute('data-tz');
+var zone=isNaN(Number(tz))?tz:Number(tz);
+var dt=luxon.DateTime.fromISO(el.getAttribute('data-datetime'),{zone:zone}).toLocal();
+if(!dt.isValid){return;}
+var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';
+var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',datetime12:'%Y-%m-%d %I:%M %p',full:'%A, %-d %B %Y at %H:%M %Z',full12:'%A, %-d %B %Y at %I:%M %p %Z'};
+if(P[fmt])fmt=P[fmt];
+var pad=function(n){return String(n).padStart(2,'0');};
+var h=dt.hour,mi=dt.minute;
+el.textContent=fmt
+  .replace(/%Y/g,String(dt.year))
+  .replace(/%-m/g,String(dt.month)).replace(/%m/g,pad(dt.month))
+  .replace(/%-d/g,String(dt.day)).replace(/%d/g,pad(dt.day))
+  .replace(/%-H/g,String(h)).replace(/%H/g,pad(h))
+  .replace(/%-I/g,String(h%12||12)).replace(/%I/g,pad(h%12||12))
+  .replace(/%-M/g,String(mi)).replace(/%M/g,pad(mi))
+  .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
+  .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
+  .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
+  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
 </tr>
 <tr class="even">
 <td><code>{{&lt; localtime 2026-01-30 13:00 UTC format="time" &gt;}}</code></td>
-<td><p><span id="localtime-9" class="localtime" data-utc="2026-01-30T13:00:00Z" data-format="time">2026-01-30 13:00 UTC</span><script>
-(function(){var el=document.getElementById('localtime-9');var d=new Date(el.getAttribute('data-utc'));var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',full:'%A, %d %B %Y at %H:%M %Z'};if(P[fmt])fmt=P[fmt];function pad(n){return String(n).padStart(2,'0');}var y=d.getFullYear(),mo=d.getMonth()+1,dy=d.getDate(),h=d.getHours(),mi=d.getMinutes(),h12=h%12||12,ap=h<12?'AM':'PM';var tzPart=Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(d).find(function(p){return p.type==='timeZoneName';});var tz=tzPart?tzPart.value:'';el.textContent=fmt.replace(/%Y/g,y).replace(/%m/g,pad(mo)).replace(/%d/g,pad(dy)).replace(/%H/g,pad(h)).replace(/%I/g,pad(h12)).replace(/%M/g,pad(mi)).replace(/%p/g,ap).replace(/%B/g,new Intl.DateTimeFormat(undefined,{month:'long'}).format(d)).replace(/%b/g,new Intl.DateTimeFormat(undefined,{month:'short'}).format(d)).replace(/%A/g,new Intl.DateTimeFormat(undefined,{weekday:'long'}).format(d)).replace(/%a/g,new Intl.DateTimeFormat(undefined,{weekday:'short'}).format(d)).replace(/%Z/g,tz);})();
-</script></p></td>
+<td><p><span id="localtime-15" class="localtime" data-datetime="2026-01-30T13:00" data-tz="UTC" data-format="time">2026-01-30 13:00 UTC</span><script>(function(){var el=document.getElementById('localtime-15');
+if(typeof luxon==='undefined'){return;}
+var tz=el.getAttribute('data-tz');
+var zone=isNaN(Number(tz))?tz:Number(tz);
+var dt=luxon.DateTime.fromISO(el.getAttribute('data-datetime'),{zone:zone}).toLocal();
+if(!dt.isValid){return;}
+var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';
+var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',datetime12:'%Y-%m-%d %I:%M %p',full:'%A, %-d %B %Y at %H:%M %Z',full12:'%A, %-d %B %Y at %I:%M %p %Z'};
+if(P[fmt])fmt=P[fmt];
+var pad=function(n){return String(n).padStart(2,'0');};
+var h=dt.hour,mi=dt.minute;
+el.textContent=fmt
+  .replace(/%Y/g,String(dt.year))
+  .replace(/%-m/g,String(dt.month)).replace(/%m/g,pad(dt.month))
+  .replace(/%-d/g,String(dt.day)).replace(/%d/g,pad(dt.day))
+  .replace(/%-H/g,String(h)).replace(/%H/g,pad(h))
+  .replace(/%-I/g,String(h%12||12)).replace(/%I/g,pad(h%12||12))
+  .replace(/%-M/g,String(mi)).replace(/%M/g,pad(mi))
+  .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
+  .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
+  .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
+  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
 </tr>
 <tr class="odd">
 <td><code>{{&lt; localtime 2026-01-30 13:00 UTC format="time12" &gt;}}</code></td>
-<td><p><span id="localtime-10" class="localtime" data-utc="2026-01-30T13:00:00Z" data-format="time12">2026-01-30 13:00 UTC</span><script>
-(function(){var el=document.getElementById('localtime-10');var d=new Date(el.getAttribute('data-utc'));var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',full:'%A, %d %B %Y at %H:%M %Z'};if(P[fmt])fmt=P[fmt];function pad(n){return String(n).padStart(2,'0');}var y=d.getFullYear(),mo=d.getMonth()+1,dy=d.getDate(),h=d.getHours(),mi=d.getMinutes(),h12=h%12||12,ap=h<12?'AM':'PM';var tzPart=Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(d).find(function(p){return p.type==='timeZoneName';});var tz=tzPart?tzPart.value:'';el.textContent=fmt.replace(/%Y/g,y).replace(/%m/g,pad(mo)).replace(/%d/g,pad(dy)).replace(/%H/g,pad(h)).replace(/%I/g,pad(h12)).replace(/%M/g,pad(mi)).replace(/%p/g,ap).replace(/%B/g,new Intl.DateTimeFormat(undefined,{month:'long'}).format(d)).replace(/%b/g,new Intl.DateTimeFormat(undefined,{month:'short'}).format(d)).replace(/%A/g,new Intl.DateTimeFormat(undefined,{weekday:'long'}).format(d)).replace(/%a/g,new Intl.DateTimeFormat(undefined,{weekday:'short'}).format(d)).replace(/%Z/g,tz);})();
-</script></p></td>
+<td><p><span id="localtime-16" class="localtime" data-datetime="2026-01-30T13:00" data-tz="UTC" data-format="time12">2026-01-30 13:00 UTC</span><script>(function(){var el=document.getElementById('localtime-16');
+if(typeof luxon==='undefined'){return;}
+var tz=el.getAttribute('data-tz');
+var zone=isNaN(Number(tz))?tz:Number(tz);
+var dt=luxon.DateTime.fromISO(el.getAttribute('data-datetime'),{zone:zone}).toLocal();
+if(!dt.isValid){return;}
+var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';
+var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',datetime12:'%Y-%m-%d %I:%M %p',full:'%A, %-d %B %Y at %H:%M %Z',full12:'%A, %-d %B %Y at %I:%M %p %Z'};
+if(P[fmt])fmt=P[fmt];
+var pad=function(n){return String(n).padStart(2,'0');};
+var h=dt.hour,mi=dt.minute;
+el.textContent=fmt
+  .replace(/%Y/g,String(dt.year))
+  .replace(/%-m/g,String(dt.month)).replace(/%m/g,pad(dt.month))
+  .replace(/%-d/g,String(dt.day)).replace(/%d/g,pad(dt.day))
+  .replace(/%-H/g,String(h)).replace(/%H/g,pad(h))
+  .replace(/%-I/g,String(h%12||12)).replace(/%I/g,pad(h%12||12))
+  .replace(/%-M/g,String(mi)).replace(/%M/g,pad(mi))
+  .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
+  .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
+  .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
+  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
 </tr>
 <tr class="even">
 <td><code>{{&lt; localtime 2026-01-30 13:00 UTC format="datetime" &gt;}}</code></td>
-<td><p><span id="localtime-11" class="localtime" data-utc="2026-01-30T13:00:00Z" data-format="datetime">2026-01-30 13:00 UTC</span><script>
-(function(){var el=document.getElementById('localtime-11');var d=new Date(el.getAttribute('data-utc'));var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',full:'%A, %d %B %Y at %H:%M %Z'};if(P[fmt])fmt=P[fmt];function pad(n){return String(n).padStart(2,'0');}var y=d.getFullYear(),mo=d.getMonth()+1,dy=d.getDate(),h=d.getHours(),mi=d.getMinutes(),h12=h%12||12,ap=h<12?'AM':'PM';var tzPart=Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(d).find(function(p){return p.type==='timeZoneName';});var tz=tzPart?tzPart.value:'';el.textContent=fmt.replace(/%Y/g,y).replace(/%m/g,pad(mo)).replace(/%d/g,pad(dy)).replace(/%H/g,pad(h)).replace(/%I/g,pad(h12)).replace(/%M/g,pad(mi)).replace(/%p/g,ap).replace(/%B/g,new Intl.DateTimeFormat(undefined,{month:'long'}).format(d)).replace(/%b/g,new Intl.DateTimeFormat(undefined,{month:'short'}).format(d)).replace(/%A/g,new Intl.DateTimeFormat(undefined,{weekday:'long'}).format(d)).replace(/%a/g,new Intl.DateTimeFormat(undefined,{weekday:'short'}).format(d)).replace(/%Z/g,tz);})();
-</script></p></td>
+<td><p><span id="localtime-17" class="localtime" data-datetime="2026-01-30T13:00" data-tz="UTC" data-format="datetime">2026-01-30 13:00 UTC</span><script>(function(){var el=document.getElementById('localtime-17');
+if(typeof luxon==='undefined'){return;}
+var tz=el.getAttribute('data-tz');
+var zone=isNaN(Number(tz))?tz:Number(tz);
+var dt=luxon.DateTime.fromISO(el.getAttribute('data-datetime'),{zone:zone}).toLocal();
+if(!dt.isValid){return;}
+var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';
+var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',datetime12:'%Y-%m-%d %I:%M %p',full:'%A, %-d %B %Y at %H:%M %Z',full12:'%A, %-d %B %Y at %I:%M %p %Z'};
+if(P[fmt])fmt=P[fmt];
+var pad=function(n){return String(n).padStart(2,'0');};
+var h=dt.hour,mi=dt.minute;
+el.textContent=fmt
+  .replace(/%Y/g,String(dt.year))
+  .replace(/%-m/g,String(dt.month)).replace(/%m/g,pad(dt.month))
+  .replace(/%-d/g,String(dt.day)).replace(/%d/g,pad(dt.day))
+  .replace(/%-H/g,String(h)).replace(/%H/g,pad(h))
+  .replace(/%-I/g,String(h%12||12)).replace(/%I/g,pad(h%12||12))
+  .replace(/%-M/g,String(mi)).replace(/%M/g,pad(mi))
+  .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
+  .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
+  .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
+  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
 </tr>
 <tr class="odd">
+<td><code>{{&lt; localtime 2026-01-30 13:00 UTC format="datetime12" &gt;}}</code></td>
+<td><p><span id="localtime-18" class="localtime" data-datetime="2026-01-30T13:00" data-tz="UTC" data-format="datetime12">2026-01-30 13:00 UTC</span><script>(function(){var el=document.getElementById('localtime-18');
+if(typeof luxon==='undefined'){return;}
+var tz=el.getAttribute('data-tz');
+var zone=isNaN(Number(tz))?tz:Number(tz);
+var dt=luxon.DateTime.fromISO(el.getAttribute('data-datetime'),{zone:zone}).toLocal();
+if(!dt.isValid){return;}
+var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';
+var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',datetime12:'%Y-%m-%d %I:%M %p',full:'%A, %-d %B %Y at %H:%M %Z',full12:'%A, %-d %B %Y at %I:%M %p %Z'};
+if(P[fmt])fmt=P[fmt];
+var pad=function(n){return String(n).padStart(2,'0');};
+var h=dt.hour,mi=dt.minute;
+el.textContent=fmt
+  .replace(/%Y/g,String(dt.year))
+  .replace(/%-m/g,String(dt.month)).replace(/%m/g,pad(dt.month))
+  .replace(/%-d/g,String(dt.day)).replace(/%d/g,pad(dt.day))
+  .replace(/%-H/g,String(h)).replace(/%H/g,pad(h))
+  .replace(/%-I/g,String(h%12||12)).replace(/%I/g,pad(h%12||12))
+  .replace(/%-M/g,String(mi)).replace(/%M/g,pad(mi))
+  .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
+  .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
+  .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
+  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
+</tr>
+<tr class="even">
 <td><code>{{&lt; localtime 2026-01-30 13:00 UTC format="full" &gt;}}</code></td>
-<td><p><span id="localtime-12" class="localtime" data-utc="2026-01-30T13:00:00Z" data-format="full">2026-01-30 13:00 UTC</span><script>
-(function(){var el=document.getElementById('localtime-12');var d=new Date(el.getAttribute('data-utc'));var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',full:'%A, %d %B %Y at %H:%M %Z'};if(P[fmt])fmt=P[fmt];function pad(n){return String(n).padStart(2,'0');}var y=d.getFullYear(),mo=d.getMonth()+1,dy=d.getDate(),h=d.getHours(),mi=d.getMinutes(),h12=h%12||12,ap=h<12?'AM':'PM';var tzPart=Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(d).find(function(p){return p.type==='timeZoneName';});var tz=tzPart?tzPart.value:'';el.textContent=fmt.replace(/%Y/g,y).replace(/%m/g,pad(mo)).replace(/%d/g,pad(dy)).replace(/%H/g,pad(h)).replace(/%I/g,pad(h12)).replace(/%M/g,pad(mi)).replace(/%p/g,ap).replace(/%B/g,new Intl.DateTimeFormat(undefined,{month:'long'}).format(d)).replace(/%b/g,new Intl.DateTimeFormat(undefined,{month:'short'}).format(d)).replace(/%A/g,new Intl.DateTimeFormat(undefined,{weekday:'long'}).format(d)).replace(/%a/g,new Intl.DateTimeFormat(undefined,{weekday:'short'}).format(d)).replace(/%Z/g,tz);})();
-</script></p></td>
+<td><p><span id="localtime-19" class="localtime" data-datetime="2026-01-30T13:00" data-tz="UTC" data-format="full">2026-01-30 13:00 UTC</span><script>(function(){var el=document.getElementById('localtime-19');
+if(typeof luxon==='undefined'){return;}
+var tz=el.getAttribute('data-tz');
+var zone=isNaN(Number(tz))?tz:Number(tz);
+var dt=luxon.DateTime.fromISO(el.getAttribute('data-datetime'),{zone:zone}).toLocal();
+if(!dt.isValid){return;}
+var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';
+var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',datetime12:'%Y-%m-%d %I:%M %p',full:'%A, %-d %B %Y at %H:%M %Z',full12:'%A, %-d %B %Y at %I:%M %p %Z'};
+if(P[fmt])fmt=P[fmt];
+var pad=function(n){return String(n).padStart(2,'0');};
+var h=dt.hour,mi=dt.minute;
+el.textContent=fmt
+  .replace(/%Y/g,String(dt.year))
+  .replace(/%-m/g,String(dt.month)).replace(/%m/g,pad(dt.month))
+  .replace(/%-d/g,String(dt.day)).replace(/%d/g,pad(dt.day))
+  .replace(/%-H/g,String(h)).replace(/%H/g,pad(h))
+  .replace(/%-I/g,String(h%12||12)).replace(/%I/g,pad(h%12||12))
+  .replace(/%-M/g,String(mi)).replace(/%M/g,pad(mi))
+  .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
+  .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
+  .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
+  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
+</tr>
+<tr class="odd">
+<td><code>{{&lt; localtime 2026-01-30 13:00 UTC format="full12" &gt;}}</code></td>
+<td><p><span id="localtime-20" class="localtime" data-datetime="2026-01-30T13:00" data-tz="UTC" data-format="full12">2026-01-30 13:00 UTC</span><script>(function(){var el=document.getElementById('localtime-20');
+if(typeof luxon==='undefined'){return;}
+var tz=el.getAttribute('data-tz');
+var zone=isNaN(Number(tz))?tz:Number(tz);
+var dt=luxon.DateTime.fromISO(el.getAttribute('data-datetime'),{zone:zone}).toLocal();
+if(!dt.isValid){return;}
+var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';
+var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',datetime12:'%Y-%m-%d %I:%M %p',full:'%A, %-d %B %Y at %H:%M %Z',full12:'%A, %-d %B %Y at %I:%M %p %Z'};
+if(P[fmt])fmt=P[fmt];
+var pad=function(n){return String(n).padStart(2,'0');};
+var h=dt.hour,mi=dt.minute;
+el.textContent=fmt
+  .replace(/%Y/g,String(dt.year))
+  .replace(/%-m/g,String(dt.month)).replace(/%m/g,pad(dt.month))
+  .replace(/%-d/g,String(dt.day)).replace(/%d/g,pad(dt.day))
+  .replace(/%-H/g,String(h)).replace(/%H/g,pad(h))
+  .replace(/%-I/g,String(h%12||12)).replace(/%I/g,pad(h%12||12))
+  .replace(/%-M/g,String(mi)).replace(/%M/g,pad(mi))
+  .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
+  .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
+  .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
+  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
 </tr>
 </tbody>
 </table>
@@ -187,42 +632,382 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td><code>{{&lt; localtime 2026-01-30 13:00 UTC format="%H:%M" &gt;}}</code></td>
-<td><p><span id="localtime-13" class="localtime" data-utc="2026-01-30T13:00:00Z" data-format="%H:%M">2026-01-30 13:00 UTC</span><script>
-(function(){var el=document.getElementById('localtime-13');var d=new Date(el.getAttribute('data-utc'));var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',full:'%A, %d %B %Y at %H:%M %Z'};if(P[fmt])fmt=P[fmt];function pad(n){return String(n).padStart(2,'0');}var y=d.getFullYear(),mo=d.getMonth()+1,dy=d.getDate(),h=d.getHours(),mi=d.getMinutes(),h12=h%12||12,ap=h<12?'AM':'PM';var tzPart=Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(d).find(function(p){return p.type==='timeZoneName';});var tz=tzPart?tzPart.value:'';el.textContent=fmt.replace(/%Y/g,y).replace(/%m/g,pad(mo)).replace(/%d/g,pad(dy)).replace(/%H/g,pad(h)).replace(/%I/g,pad(h12)).replace(/%M/g,pad(mi)).replace(/%p/g,ap).replace(/%B/g,new Intl.DateTimeFormat(undefined,{month:'long'}).format(d)).replace(/%b/g,new Intl.DateTimeFormat(undefined,{month:'short'}).format(d)).replace(/%A/g,new Intl.DateTimeFormat(undefined,{weekday:'long'}).format(d)).replace(/%a/g,new Intl.DateTimeFormat(undefined,{weekday:'short'}).format(d)).replace(/%Z/g,tz);})();
-</script></p></td>
+<td><p><span id="localtime-21" class="localtime" data-datetime="2026-01-30T13:00" data-tz="UTC" data-format="%H:%M">2026-01-30 13:00 UTC</span><script>(function(){var el=document.getElementById('localtime-21');
+if(typeof luxon==='undefined'){return;}
+var tz=el.getAttribute('data-tz');
+var zone=isNaN(Number(tz))?tz:Number(tz);
+var dt=luxon.DateTime.fromISO(el.getAttribute('data-datetime'),{zone:zone}).toLocal();
+if(!dt.isValid){return;}
+var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';
+var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',datetime12:'%Y-%m-%d %I:%M %p',full:'%A, %-d %B %Y at %H:%M %Z',full12:'%A, %-d %B %Y at %I:%M %p %Z'};
+if(P[fmt])fmt=P[fmt];
+var pad=function(n){return String(n).padStart(2,'0');};
+var h=dt.hour,mi=dt.minute;
+el.textContent=fmt
+  .replace(/%Y/g,String(dt.year))
+  .replace(/%-m/g,String(dt.month)).replace(/%m/g,pad(dt.month))
+  .replace(/%-d/g,String(dt.day)).replace(/%d/g,pad(dt.day))
+  .replace(/%-H/g,String(h)).replace(/%H/g,pad(h))
+  .replace(/%-I/g,String(h%12||12)).replace(/%I/g,pad(h%12||12))
+  .replace(/%-M/g,String(mi)).replace(/%M/g,pad(mi))
+  .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
+  .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
+  .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
+  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
 </tr>
 <tr class="even">
 <td><code>{{&lt; localtime 2026-01-30 13:00 UTC format="%d %B %Y" &gt;}}</code></td>
-<td><p><span id="localtime-14" class="localtime" data-utc="2026-01-30T13:00:00Z" data-format="%d %B %Y">2026-01-30 13:00 UTC</span><script>
-(function(){var el=document.getElementById('localtime-14');var d=new Date(el.getAttribute('data-utc'));var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',full:'%A, %d %B %Y at %H:%M %Z'};if(P[fmt])fmt=P[fmt];function pad(n){return String(n).padStart(2,'0');}var y=d.getFullYear(),mo=d.getMonth()+1,dy=d.getDate(),h=d.getHours(),mi=d.getMinutes(),h12=h%12||12,ap=h<12?'AM':'PM';var tzPart=Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(d).find(function(p){return p.type==='timeZoneName';});var tz=tzPart?tzPart.value:'';el.textContent=fmt.replace(/%Y/g,y).replace(/%m/g,pad(mo)).replace(/%d/g,pad(dy)).replace(/%H/g,pad(h)).replace(/%I/g,pad(h12)).replace(/%M/g,pad(mi)).replace(/%p/g,ap).replace(/%B/g,new Intl.DateTimeFormat(undefined,{month:'long'}).format(d)).replace(/%b/g,new Intl.DateTimeFormat(undefined,{month:'short'}).format(d)).replace(/%A/g,new Intl.DateTimeFormat(undefined,{weekday:'long'}).format(d)).replace(/%a/g,new Intl.DateTimeFormat(undefined,{weekday:'short'}).format(d)).replace(/%Z/g,tz);})();
-</script></p></td>
+<td><p><span id="localtime-22" class="localtime" data-datetime="2026-01-30T13:00" data-tz="UTC" data-format="%d %B %Y">2026-01-30 13:00 UTC</span><script>(function(){var el=document.getElementById('localtime-22');
+if(typeof luxon==='undefined'){return;}
+var tz=el.getAttribute('data-tz');
+var zone=isNaN(Number(tz))?tz:Number(tz);
+var dt=luxon.DateTime.fromISO(el.getAttribute('data-datetime'),{zone:zone}).toLocal();
+if(!dt.isValid){return;}
+var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';
+var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',datetime12:'%Y-%m-%d %I:%M %p',full:'%A, %-d %B %Y at %H:%M %Z',full12:'%A, %-d %B %Y at %I:%M %p %Z'};
+if(P[fmt])fmt=P[fmt];
+var pad=function(n){return String(n).padStart(2,'0');};
+var h=dt.hour,mi=dt.minute;
+el.textContent=fmt
+  .replace(/%Y/g,String(dt.year))
+  .replace(/%-m/g,String(dt.month)).replace(/%m/g,pad(dt.month))
+  .replace(/%-d/g,String(dt.day)).replace(/%d/g,pad(dt.day))
+  .replace(/%-H/g,String(h)).replace(/%H/g,pad(h))
+  .replace(/%-I/g,String(h%12||12)).replace(/%I/g,pad(h%12||12))
+  .replace(/%-M/g,String(mi)).replace(/%M/g,pad(mi))
+  .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
+  .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
+  .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
+  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
 </tr>
 <tr class="odd">
 <td><code>{{&lt; localtime 2026-01-30 13:00 UTC format="%I:%M %p" &gt;}}</code></td>
-<td><p><span id="localtime-15" class="localtime" data-utc="2026-01-30T13:00:00Z" data-format="%I:%M %p">2026-01-30 13:00 UTC</span><script>
-(function(){var el=document.getElementById('localtime-15');var d=new Date(el.getAttribute('data-utc'));var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',full:'%A, %d %B %Y at %H:%M %Z'};if(P[fmt])fmt=P[fmt];function pad(n){return String(n).padStart(2,'0');}var y=d.getFullYear(),mo=d.getMonth()+1,dy=d.getDate(),h=d.getHours(),mi=d.getMinutes(),h12=h%12||12,ap=h<12?'AM':'PM';var tzPart=Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(d).find(function(p){return p.type==='timeZoneName';});var tz=tzPart?tzPart.value:'';el.textContent=fmt.replace(/%Y/g,y).replace(/%m/g,pad(mo)).replace(/%d/g,pad(dy)).replace(/%H/g,pad(h)).replace(/%I/g,pad(h12)).replace(/%M/g,pad(mi)).replace(/%p/g,ap).replace(/%B/g,new Intl.DateTimeFormat(undefined,{month:'long'}).format(d)).replace(/%b/g,new Intl.DateTimeFormat(undefined,{month:'short'}).format(d)).replace(/%A/g,new Intl.DateTimeFormat(undefined,{weekday:'long'}).format(d)).replace(/%a/g,new Intl.DateTimeFormat(undefined,{weekday:'short'}).format(d)).replace(/%Z/g,tz);})();
-</script></p></td>
+<td><p><span id="localtime-23" class="localtime" data-datetime="2026-01-30T13:00" data-tz="UTC" data-format="%I:%M %p">2026-01-30 13:00 UTC</span><script>(function(){var el=document.getElementById('localtime-23');
+if(typeof luxon==='undefined'){return;}
+var tz=el.getAttribute('data-tz');
+var zone=isNaN(Number(tz))?tz:Number(tz);
+var dt=luxon.DateTime.fromISO(el.getAttribute('data-datetime'),{zone:zone}).toLocal();
+if(!dt.isValid){return;}
+var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';
+var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',datetime12:'%Y-%m-%d %I:%M %p',full:'%A, %-d %B %Y at %H:%M %Z',full12:'%A, %-d %B %Y at %I:%M %p %Z'};
+if(P[fmt])fmt=P[fmt];
+var pad=function(n){return String(n).padStart(2,'0');};
+var h=dt.hour,mi=dt.minute;
+el.textContent=fmt
+  .replace(/%Y/g,String(dt.year))
+  .replace(/%-m/g,String(dt.month)).replace(/%m/g,pad(dt.month))
+  .replace(/%-d/g,String(dt.day)).replace(/%d/g,pad(dt.day))
+  .replace(/%-H/g,String(h)).replace(/%H/g,pad(h))
+  .replace(/%-I/g,String(h%12||12)).replace(/%I/g,pad(h%12||12))
+  .replace(/%-M/g,String(mi)).replace(/%M/g,pad(mi))
+  .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
+  .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
+  .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
+  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
 </tr>
 <tr class="even">
+<td><code>{{&lt; localtime 2026-01-30 13:00 UTC format="%I:%M %P" &gt;}}</code></td>
+<td><p><span id="localtime-24" class="localtime" data-datetime="2026-01-30T13:00" data-tz="UTC" data-format="%I:%M %P">2026-01-30 13:00 UTC</span><script>(function(){var el=document.getElementById('localtime-24');
+if(typeof luxon==='undefined'){return;}
+var tz=el.getAttribute('data-tz');
+var zone=isNaN(Number(tz))?tz:Number(tz);
+var dt=luxon.DateTime.fromISO(el.getAttribute('data-datetime'),{zone:zone}).toLocal();
+if(!dt.isValid){return;}
+var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';
+var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',datetime12:'%Y-%m-%d %I:%M %p',full:'%A, %-d %B %Y at %H:%M %Z',full12:'%A, %-d %B %Y at %I:%M %p %Z'};
+if(P[fmt])fmt=P[fmt];
+var pad=function(n){return String(n).padStart(2,'0');};
+var h=dt.hour,mi=dt.minute;
+el.textContent=fmt
+  .replace(/%Y/g,String(dt.year))
+  .replace(/%-m/g,String(dt.month)).replace(/%m/g,pad(dt.month))
+  .replace(/%-d/g,String(dt.day)).replace(/%d/g,pad(dt.day))
+  .replace(/%-H/g,String(h)).replace(/%H/g,pad(h))
+  .replace(/%-I/g,String(h%12||12)).replace(/%I/g,pad(h%12||12))
+  .replace(/%-M/g,String(mi)).replace(/%M/g,pad(mi))
+  .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
+  .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
+  .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
+  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
+</tr>
+<tr class="odd">
 <td><code>{{&lt; localtime 2026-01-30 13:00 UTC format="%A, %d %B %Y at %H:%M %Z" &gt;}}</code></td>
-<td><p><span id="localtime-16" class="localtime" data-utc="2026-01-30T13:00:00Z" data-format="%A, %d %B %Y at %H:%M %Z">2026-01-30 13:00 UTC</span><script>
-(function(){var el=document.getElementById('localtime-16');var d=new Date(el.getAttribute('data-utc'));var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',full:'%A, %d %B %Y at %H:%M %Z'};if(P[fmt])fmt=P[fmt];function pad(n){return String(n).padStart(2,'0');}var y=d.getFullYear(),mo=d.getMonth()+1,dy=d.getDate(),h=d.getHours(),mi=d.getMinutes(),h12=h%12||12,ap=h<12?'AM':'PM';var tzPart=Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(d).find(function(p){return p.type==='timeZoneName';});var tz=tzPart?tzPart.value:'';el.textContent=fmt.replace(/%Y/g,y).replace(/%m/g,pad(mo)).replace(/%d/g,pad(dy)).replace(/%H/g,pad(h)).replace(/%I/g,pad(h12)).replace(/%M/g,pad(mi)).replace(/%p/g,ap).replace(/%B/g,new Intl.DateTimeFormat(undefined,{month:'long'}).format(d)).replace(/%b/g,new Intl.DateTimeFormat(undefined,{month:'short'}).format(d)).replace(/%A/g,new Intl.DateTimeFormat(undefined,{weekday:'long'}).format(d)).replace(/%a/g,new Intl.DateTimeFormat(undefined,{weekday:'short'}).format(d)).replace(/%Z/g,tz);})();
-</script></p></td>
+<td><p><span id="localtime-25" class="localtime" data-datetime="2026-01-30T13:00" data-tz="UTC" data-format="%A, %d %B %Y at %H:%M %Z">2026-01-30 13:00 UTC</span><script>(function(){var el=document.getElementById('localtime-25');
+if(typeof luxon==='undefined'){return;}
+var tz=el.getAttribute('data-tz');
+var zone=isNaN(Number(tz))?tz:Number(tz);
+var dt=luxon.DateTime.fromISO(el.getAttribute('data-datetime'),{zone:zone}).toLocal();
+if(!dt.isValid){return;}
+var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';
+var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',datetime12:'%Y-%m-%d %I:%M %p',full:'%A, %-d %B %Y at %H:%M %Z',full12:'%A, %-d %B %Y at %I:%M %p %Z'};
+if(P[fmt])fmt=P[fmt];
+var pad=function(n){return String(n).padStart(2,'0');};
+var h=dt.hour,mi=dt.minute;
+el.textContent=fmt
+  .replace(/%Y/g,String(dt.year))
+  .replace(/%-m/g,String(dt.month)).replace(/%m/g,pad(dt.month))
+  .replace(/%-d/g,String(dt.day)).replace(/%d/g,pad(dt.day))
+  .replace(/%-H/g,String(h)).replace(/%H/g,pad(h))
+  .replace(/%-I/g,String(h%12||12)).replace(/%I/g,pad(h%12||12))
+  .replace(/%-M/g,String(mi)).replace(/%M/g,pad(mi))
+  .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
+  .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
+  .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
+  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
 </tr>
 </tbody>
 </table>
+</section>
+<section id="no-padding-format-tokens" class="level2">
+<h2 class="anchored" data-anchor-id="no-padding-format-tokens">No-padding format tokens</h2>
+<p>Use <code>%-</code> variants to suppress zero-padding on numeric fields.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Shortcode</th>
+<th>Renders locally as</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>{{&lt; localtime 2026-01-03 08:05 UTC format="%d %B %Y at %H:%M" &gt;}}</code></td>
+<td><p><span id="localtime-26" class="localtime" data-datetime="2026-01-03T08:05" data-tz="UTC" data-format="%d %B %Y at %H:%M">2026-01-03 08:05 UTC</span><script>(function(){var el=document.getElementById('localtime-26');
+if(typeof luxon==='undefined'){return;}
+var tz=el.getAttribute('data-tz');
+var zone=isNaN(Number(tz))?tz:Number(tz);
+var dt=luxon.DateTime.fromISO(el.getAttribute('data-datetime'),{zone:zone}).toLocal();
+if(!dt.isValid){return;}
+var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';
+var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',datetime12:'%Y-%m-%d %I:%M %p',full:'%A, %-d %B %Y at %H:%M %Z',full12:'%A, %-d %B %Y at %I:%M %p %Z'};
+if(P[fmt])fmt=P[fmt];
+var pad=function(n){return String(n).padStart(2,'0');};
+var h=dt.hour,mi=dt.minute;
+el.textContent=fmt
+  .replace(/%Y/g,String(dt.year))
+  .replace(/%-m/g,String(dt.month)).replace(/%m/g,pad(dt.month))
+  .replace(/%-d/g,String(dt.day)).replace(/%d/g,pad(dt.day))
+  .replace(/%-H/g,String(h)).replace(/%H/g,pad(h))
+  .replace(/%-I/g,String(h%12||12)).replace(/%I/g,pad(h%12||12))
+  .replace(/%-M/g,String(mi)).replace(/%M/g,pad(mi))
+  .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
+  .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
+  .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
+  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
+</tr>
+<tr class="even">
+<td><code>{{&lt; localtime 2026-01-03 08:05 UTC format="%-d %B %Y at %-H:%M" &gt;}}</code></td>
+<td><p><span id="localtime-27" class="localtime" data-datetime="2026-01-03T08:05" data-tz="UTC" data-format="%-d %B %Y at %-H:%M">2026-01-03 08:05 UTC</span><script>(function(){var el=document.getElementById('localtime-27');
+if(typeof luxon==='undefined'){return;}
+var tz=el.getAttribute('data-tz');
+var zone=isNaN(Number(tz))?tz:Number(tz);
+var dt=luxon.DateTime.fromISO(el.getAttribute('data-datetime'),{zone:zone}).toLocal();
+if(!dt.isValid){return;}
+var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';
+var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',datetime12:'%Y-%m-%d %I:%M %p',full:'%A, %-d %B %Y at %H:%M %Z',full12:'%A, %-d %B %Y at %I:%M %p %Z'};
+if(P[fmt])fmt=P[fmt];
+var pad=function(n){return String(n).padStart(2,'0');};
+var h=dt.hour,mi=dt.minute;
+el.textContent=fmt
+  .replace(/%Y/g,String(dt.year))
+  .replace(/%-m/g,String(dt.month)).replace(/%m/g,pad(dt.month))
+  .replace(/%-d/g,String(dt.day)).replace(/%d/g,pad(dt.day))
+  .replace(/%-H/g,String(h)).replace(/%H/g,pad(h))
+  .replace(/%-I/g,String(h%12||12)).replace(/%I/g,pad(h%12||12))
+  .replace(/%-M/g,String(mi)).replace(/%M/g,pad(mi))
+  .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
+  .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
+  .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
+  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
+</tr>
+<tr class="odd">
+<td><code>{{&lt; localtime 2026-01-03 08:05 UTC format="%-d %b %Y, %-I:%M %p" &gt;}}</code></td>
+<td><p><span id="localtime-28" class="localtime" data-datetime="2026-01-03T08:05" data-tz="UTC" data-format="%-d %b %Y, %-I:%M %p">2026-01-03 08:05 UTC</span><script>(function(){var el=document.getElementById('localtime-28');
+if(typeof luxon==='undefined'){return;}
+var tz=el.getAttribute('data-tz');
+var zone=isNaN(Number(tz))?tz:Number(tz);
+var dt=luxon.DateTime.fromISO(el.getAttribute('data-datetime'),{zone:zone}).toLocal();
+if(!dt.isValid){return;}
+var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';
+var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',datetime12:'%Y-%m-%d %I:%M %p',full:'%A, %-d %B %Y at %H:%M %Z',full12:'%A, %-d %B %Y at %I:%M %p %Z'};
+if(P[fmt])fmt=P[fmt];
+var pad=function(n){return String(n).padStart(2,'0');};
+var h=dt.hour,mi=dt.minute;
+el.textContent=fmt
+  .replace(/%Y/g,String(dt.year))
+  .replace(/%-m/g,String(dt.month)).replace(/%m/g,pad(dt.month))
+  .replace(/%-d/g,String(dt.day)).replace(/%d/g,pad(dt.day))
+  .replace(/%-H/g,String(h)).replace(/%H/g,pad(h))
+  .replace(/%-I/g,String(h%12||12)).replace(/%I/g,pad(h%12||12))
+  .replace(/%-M/g,String(mi)).replace(/%M/g,pad(mi))
+  .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
+  .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
+  .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
+  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
+</tr>
+</tbody>
+</table>
+<p>The first row uses <code>%d</code> and <code>%H</code> (zero-padded), the second uses <code>%-d</code> and <code>%-H</code> (no padding).</p>
+</section>
+<section id="iana-timezone-names" class="level2">
+<h2 class="anchored" data-anchor-id="iana-timezone-names">IANA timezone names</h2>
+<p>Any IANA timezone name can be used directly. Unlike abbreviations, IANA names are unambiguous and the browser handles DST automatically.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Shortcode</th>
+<th>Renders locally as</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>{{&lt; localtime 2026-01-30 13:00 America/New_York &gt;}}</code></td>
+<td><p><span id="localtime-29" class="localtime" data-datetime="2026-01-30T13:00" data-tz="America/New_York" data-format="">2026-01-30 13:00 America/New_York</span><script>(function(){var el=document.getElementById('localtime-29');
+if(typeof luxon==='undefined'){return;}
+var tz=el.getAttribute('data-tz');
+var zone=isNaN(Number(tz))?tz:Number(tz);
+var dt=luxon.DateTime.fromISO(el.getAttribute('data-datetime'),{zone:zone}).toLocal();
+if(!dt.isValid){return;}
+var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';
+var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',datetime12:'%Y-%m-%d %I:%M %p',full:'%A, %-d %B %Y at %H:%M %Z',full12:'%A, %-d %B %Y at %I:%M %p %Z'};
+if(P[fmt])fmt=P[fmt];
+var pad=function(n){return String(n).padStart(2,'0');};
+var h=dt.hour,mi=dt.minute;
+el.textContent=fmt
+  .replace(/%Y/g,String(dt.year))
+  .replace(/%-m/g,String(dt.month)).replace(/%m/g,pad(dt.month))
+  .replace(/%-d/g,String(dt.day)).replace(/%d/g,pad(dt.day))
+  .replace(/%-H/g,String(h)).replace(/%H/g,pad(h))
+  .replace(/%-I/g,String(h%12||12)).replace(/%I/g,pad(h%12||12))
+  .replace(/%-M/g,String(mi)).replace(/%M/g,pad(mi))
+  .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
+  .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
+  .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
+  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
+</tr>
+<tr class="even">
+<td><code>{{&lt; localtime 2026-07-15 13:00 America/New_York &gt;}}</code></td>
+<td><p><span id="localtime-30" class="localtime" data-datetime="2026-07-15T13:00" data-tz="America/New_York" data-format="">2026-07-15 13:00 America/New_York</span><script>(function(){var el=document.getElementById('localtime-30');
+if(typeof luxon==='undefined'){return;}
+var tz=el.getAttribute('data-tz');
+var zone=isNaN(Number(tz))?tz:Number(tz);
+var dt=luxon.DateTime.fromISO(el.getAttribute('data-datetime'),{zone:zone}).toLocal();
+if(!dt.isValid){return;}
+var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';
+var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',datetime12:'%Y-%m-%d %I:%M %p',full:'%A, %-d %B %Y at %H:%M %Z',full12:'%A, %-d %B %Y at %I:%M %p %Z'};
+if(P[fmt])fmt=P[fmt];
+var pad=function(n){return String(n).padStart(2,'0');};
+var h=dt.hour,mi=dt.minute;
+el.textContent=fmt
+  .replace(/%Y/g,String(dt.year))
+  .replace(/%-m/g,String(dt.month)).replace(/%m/g,pad(dt.month))
+  .replace(/%-d/g,String(dt.day)).replace(/%d/g,pad(dt.day))
+  .replace(/%-H/g,String(h)).replace(/%H/g,pad(h))
+  .replace(/%-I/g,String(h%12||12)).replace(/%I/g,pad(h%12||12))
+  .replace(/%-M/g,String(mi)).replace(/%M/g,pad(mi))
+  .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
+  .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
+  .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
+  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
+</tr>
+<tr class="odd">
+<td><code>{{&lt; localtime 2026-01-30 09:00 Europe/Paris &gt;}}</code></td>
+<td><p><span id="localtime-31" class="localtime" data-datetime="2026-01-30T09:00" data-tz="Europe/Paris" data-format="">2026-01-30 09:00 Europe/Paris</span><script>(function(){var el=document.getElementById('localtime-31');
+if(typeof luxon==='undefined'){return;}
+var tz=el.getAttribute('data-tz');
+var zone=isNaN(Number(tz))?tz:Number(tz);
+var dt=luxon.DateTime.fromISO(el.getAttribute('data-datetime'),{zone:zone}).toLocal();
+if(!dt.isValid){return;}
+var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';
+var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',datetime12:'%Y-%m-%d %I:%M %p',full:'%A, %-d %B %Y at %H:%M %Z',full12:'%A, %-d %B %Y at %I:%M %p %Z'};
+if(P[fmt])fmt=P[fmt];
+var pad=function(n){return String(n).padStart(2,'0');};
+var h=dt.hour,mi=dt.minute;
+el.textContent=fmt
+  .replace(/%Y/g,String(dt.year))
+  .replace(/%-m/g,String(dt.month)).replace(/%m/g,pad(dt.month))
+  .replace(/%-d/g,String(dt.day)).replace(/%d/g,pad(dt.day))
+  .replace(/%-H/g,String(h)).replace(/%H/g,pad(h))
+  .replace(/%-I/g,String(h%12||12)).replace(/%I/g,pad(h%12||12))
+  .replace(/%-M/g,String(mi)).replace(/%M/g,pad(mi))
+  .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
+  .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
+  .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
+  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
+</tr>
+<tr class="even">
+<td><code>{{&lt; localtime 2026-07-15 09:00 Europe/Paris &gt;}}</code></td>
+<td><p><span id="localtime-32" class="localtime" data-datetime="2026-07-15T09:00" data-tz="Europe/Paris" data-format="">2026-07-15 09:00 Europe/Paris</span><script>(function(){var el=document.getElementById('localtime-32');
+if(typeof luxon==='undefined'){return;}
+var tz=el.getAttribute('data-tz');
+var zone=isNaN(Number(tz))?tz:Number(tz);
+var dt=luxon.DateTime.fromISO(el.getAttribute('data-datetime'),{zone:zone}).toLocal();
+if(!dt.isValid){return;}
+var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';
+var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',datetime12:'%Y-%m-%d %I:%M %p',full:'%A, %-d %B %Y at %H:%M %Z',full12:'%A, %-d %B %Y at %I:%M %p %Z'};
+if(P[fmt])fmt=P[fmt];
+var pad=function(n){return String(n).padStart(2,'0');};
+var h=dt.hour,mi=dt.minute;
+el.textContent=fmt
+  .replace(/%Y/g,String(dt.year))
+  .replace(/%-m/g,String(dt.month)).replace(/%m/g,pad(dt.month))
+  .replace(/%-d/g,String(dt.day)).replace(/%d/g,pad(dt.day))
+  .replace(/%-H/g,String(h)).replace(/%H/g,pad(h))
+  .replace(/%-I/g,String(h%12||12)).replace(/%I/g,pad(h%12||12))
+  .replace(/%-M/g,String(mi)).replace(/%M/g,pad(mi))
+  .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
+  .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
+  .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
+  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
+</tr>
+<tr class="odd">
+<td><code>{{&lt; localtime 2026-01-30 10:00 Australia/Sydney &gt;}}</code></td>
+<td><p><span id="localtime-33" class="localtime" data-datetime="2026-01-30T10:00" data-tz="Australia/Sydney" data-format="">2026-01-30 10:00 Australia/Sydney</span><script>(function(){var el=document.getElementById('localtime-33');
+if(typeof luxon==='undefined'){return;}
+var tz=el.getAttribute('data-tz');
+var zone=isNaN(Number(tz))?tz:Number(tz);
+var dt=luxon.DateTime.fromISO(el.getAttribute('data-datetime'),{zone:zone}).toLocal();
+if(!dt.isValid){return;}
+var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';
+var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',datetime12:'%Y-%m-%d %I:%M %p',full:'%A, %-d %B %Y at %H:%M %Z',full12:'%A, %-d %B %Y at %I:%M %p %Z'};
+if(P[fmt])fmt=P[fmt];
+var pad=function(n){return String(n).padStart(2,'0');};
+var h=dt.hour,mi=dt.minute;
+el.textContent=fmt
+  .replace(/%Y/g,String(dt.year))
+  .replace(/%-m/g,String(dt.month)).replace(/%m/g,pad(dt.month))
+  .replace(/%-d/g,String(dt.day)).replace(/%d/g,pad(dt.day))
+  .replace(/%-H/g,String(h)).replace(/%H/g,pad(h))
+  .replace(/%-I/g,String(h%12||12)).replace(/%I/g,pad(h%12||12))
+  .replace(/%-M/g,String(mi)).replace(/%M/g,pad(mi))
+  .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
+  .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
+  .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
+  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
+</tr>
+</tbody>
+</table>
+<p>The January and July rows for the same timezone show different UTC offsets because the browser applies the correct DST offset for each date.</p>
 </section>
 <section id="supported-timezone-formats" class="level2">
 <h2 class="anchored" data-anchor-id="supported-timezone-formats">Supported timezone formats</h2>
 <ul>
 <li>Common abbreviations: <code>UTC</code>, <code>GMT</code>, <code>EST</code>, <code>EDT</code>, <code>CST</code>, <code>CDT</code>, <code>MST</code>, <code>MDT</code>, <code>PST</code>, <code>PDT</code>, <code>CET</code>, <code>CEST</code>, <code>BST</code>, <code>JST</code>, <code>AEST</code>, <code>AEDT</code>, <code>NZST</code>, <code>NZDT</code>, and more</li>
+<li>IANA timezone names: <code>America/New_York</code>, <code>Europe/Paris</code>, <code>Asia/Tokyo</code>, etc.</li>
 <li>UTC offsets: <code>+05:30</code>, <code>-08:00</code>, <code>+0530</code>, <code>-8</code></li>
 <li>Prefixed offsets: <code>UTC+5</code>, <code>UTC-8</code>, <code>GMT+1</code></li>
 </ul>
 </section>
-<section id="dst-auto-correction" class="level2">
-<h2 class="anchored" data-anchor-id="dst-auto-correction">DST auto-correction</h2>
-<p>For common DST-observing timezone pairs, the extension automatically applies the correct offset based on the date. Writing <code>CET</code> for a summer date uses CEST (+02:00); writing <code>EST</code> for a summer date uses EDT (-04:00).</p>
+<section id="dst-handling" class="level2">
+<h2 class="anchored" data-anchor-id="dst-handling">DST handling</h2>
+<p>DST is handled automatically in the reader’s browser. Common abbreviations that observe DST (e.g.&nbsp;<code>EST</code>, <code>CET</code>) are mapped to their IANA timezone, and the browser applies the correct offset for each specific date.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 50%">
@@ -237,30 +1022,107 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td><code>{{&lt; localtime 2026-07-15 14:00 CET &gt;}}</code></td>
-<td><p><span id="localtime-17" class="localtime" data-utc="2026-07-15T12:00:00Z" data-format="">2026-07-15 14:00 CET</span><script>
-(function(){var el=document.getElementById('localtime-17');var d=new Date(el.getAttribute('data-utc'));var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',full:'%A, %d %B %Y at %H:%M %Z'};if(P[fmt])fmt=P[fmt];function pad(n){return String(n).padStart(2,'0');}var y=d.getFullYear(),mo=d.getMonth()+1,dy=d.getDate(),h=d.getHours(),mi=d.getMinutes(),h12=h%12||12,ap=h<12?'AM':'PM';var tzPart=Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(d).find(function(p){return p.type==='timeZoneName';});var tz=tzPart?tzPart.value:'';el.textContent=fmt.replace(/%Y/g,y).replace(/%m/g,pad(mo)).replace(/%d/g,pad(dy)).replace(/%H/g,pad(h)).replace(/%I/g,pad(h12)).replace(/%M/g,pad(mi)).replace(/%p/g,ap).replace(/%B/g,new Intl.DateTimeFormat(undefined,{month:'long'}).format(d)).replace(/%b/g,new Intl.DateTimeFormat(undefined,{month:'short'}).format(d)).replace(/%A/g,new Intl.DateTimeFormat(undefined,{weekday:'long'}).format(d)).replace(/%a/g,new Intl.DateTimeFormat(undefined,{weekday:'short'}).format(d)).replace(/%Z/g,tz);})();
-</script></p></td>
+<td><p><span id="localtime-34" class="localtime" data-datetime="2026-07-15T14:00" data-tz="Europe/Paris" data-format="">2026-07-15 14:00 CET</span><script>(function(){var el=document.getElementById('localtime-34');
+if(typeof luxon==='undefined'){return;}
+var tz=el.getAttribute('data-tz');
+var zone=isNaN(Number(tz))?tz:Number(tz);
+var dt=luxon.DateTime.fromISO(el.getAttribute('data-datetime'),{zone:zone}).toLocal();
+if(!dt.isValid){return;}
+var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';
+var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',datetime12:'%Y-%m-%d %I:%M %p',full:'%A, %-d %B %Y at %H:%M %Z',full12:'%A, %-d %B %Y at %I:%M %p %Z'};
+if(P[fmt])fmt=P[fmt];
+var pad=function(n){return String(n).padStart(2,'0');};
+var h=dt.hour,mi=dt.minute;
+el.textContent=fmt
+  .replace(/%Y/g,String(dt.year))
+  .replace(/%-m/g,String(dt.month)).replace(/%m/g,pad(dt.month))
+  .replace(/%-d/g,String(dt.day)).replace(/%d/g,pad(dt.day))
+  .replace(/%-H/g,String(h)).replace(/%H/g,pad(h))
+  .replace(/%-I/g,String(h%12||12)).replace(/%I/g,pad(h%12||12))
+  .replace(/%-M/g,String(mi)).replace(/%M/g,pad(mi))
+  .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
+  .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
+  .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
+  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
 </tr>
 <tr class="even">
 <td><code>{{&lt; localtime 2026-01-15 14:00 CET &gt;}}</code></td>
-<td><p><span id="localtime-18" class="localtime" data-utc="2026-01-15T13:00:00Z" data-format="">2026-01-15 14:00 CET</span><script>
-(function(){var el=document.getElementById('localtime-18');var d=new Date(el.getAttribute('data-utc'));var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',full:'%A, %d %B %Y at %H:%M %Z'};if(P[fmt])fmt=P[fmt];function pad(n){return String(n).padStart(2,'0');}var y=d.getFullYear(),mo=d.getMonth()+1,dy=d.getDate(),h=d.getHours(),mi=d.getMinutes(),h12=h%12||12,ap=h<12?'AM':'PM';var tzPart=Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(d).find(function(p){return p.type==='timeZoneName';});var tz=tzPart?tzPart.value:'';el.textContent=fmt.replace(/%Y/g,y).replace(/%m/g,pad(mo)).replace(/%d/g,pad(dy)).replace(/%H/g,pad(h)).replace(/%I/g,pad(h12)).replace(/%M/g,pad(mi)).replace(/%p/g,ap).replace(/%B/g,new Intl.DateTimeFormat(undefined,{month:'long'}).format(d)).replace(/%b/g,new Intl.DateTimeFormat(undefined,{month:'short'}).format(d)).replace(/%A/g,new Intl.DateTimeFormat(undefined,{weekday:'long'}).format(d)).replace(/%a/g,new Intl.DateTimeFormat(undefined,{weekday:'short'}).format(d)).replace(/%Z/g,tz);})();
-</script></p></td>
+<td><p><span id="localtime-35" class="localtime" data-datetime="2026-01-15T14:00" data-tz="Europe/Paris" data-format="">2026-01-15 14:00 CET</span><script>(function(){var el=document.getElementById('localtime-35');
+if(typeof luxon==='undefined'){return;}
+var tz=el.getAttribute('data-tz');
+var zone=isNaN(Number(tz))?tz:Number(tz);
+var dt=luxon.DateTime.fromISO(el.getAttribute('data-datetime'),{zone:zone}).toLocal();
+if(!dt.isValid){return;}
+var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';
+var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',datetime12:'%Y-%m-%d %I:%M %p',full:'%A, %-d %B %Y at %H:%M %Z',full12:'%A, %-d %B %Y at %I:%M %p %Z'};
+if(P[fmt])fmt=P[fmt];
+var pad=function(n){return String(n).padStart(2,'0');};
+var h=dt.hour,mi=dt.minute;
+el.textContent=fmt
+  .replace(/%Y/g,String(dt.year))
+  .replace(/%-m/g,String(dt.month)).replace(/%m/g,pad(dt.month))
+  .replace(/%-d/g,String(dt.day)).replace(/%d/g,pad(dt.day))
+  .replace(/%-H/g,String(h)).replace(/%H/g,pad(h))
+  .replace(/%-I/g,String(h%12||12)).replace(/%I/g,pad(h%12||12))
+  .replace(/%-M/g,String(mi)).replace(/%M/g,pad(mi))
+  .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
+  .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
+  .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
+  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
 </tr>
 <tr class="odd">
 <td><code>{{&lt; localtime 2026-07-15 09:00 EST &gt;}}</code></td>
-<td><p><span id="localtime-19" class="localtime" data-utc="2026-07-15T13:00:00Z" data-format="">2026-07-15 09:00 EST</span><script>
-(function(){var el=document.getElementById('localtime-19');var d=new Date(el.getAttribute('data-utc'));var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',full:'%A, %d %B %Y at %H:%M %Z'};if(P[fmt])fmt=P[fmt];function pad(n){return String(n).padStart(2,'0');}var y=d.getFullYear(),mo=d.getMonth()+1,dy=d.getDate(),h=d.getHours(),mi=d.getMinutes(),h12=h%12||12,ap=h<12?'AM':'PM';var tzPart=Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(d).find(function(p){return p.type==='timeZoneName';});var tz=tzPart?tzPart.value:'';el.textContent=fmt.replace(/%Y/g,y).replace(/%m/g,pad(mo)).replace(/%d/g,pad(dy)).replace(/%H/g,pad(h)).replace(/%I/g,pad(h12)).replace(/%M/g,pad(mi)).replace(/%p/g,ap).replace(/%B/g,new Intl.DateTimeFormat(undefined,{month:'long'}).format(d)).replace(/%b/g,new Intl.DateTimeFormat(undefined,{month:'short'}).format(d)).replace(/%A/g,new Intl.DateTimeFormat(undefined,{weekday:'long'}).format(d)).replace(/%a/g,new Intl.DateTimeFormat(undefined,{weekday:'short'}).format(d)).replace(/%Z/g,tz);})();
-</script></p></td>
+<td><p><span id="localtime-36" class="localtime" data-datetime="2026-07-15T09:00" data-tz="America/New_York" data-format="">2026-07-15 09:00 EST</span><script>(function(){var el=document.getElementById('localtime-36');
+if(typeof luxon==='undefined'){return;}
+var tz=el.getAttribute('data-tz');
+var zone=isNaN(Number(tz))?tz:Number(tz);
+var dt=luxon.DateTime.fromISO(el.getAttribute('data-datetime'),{zone:zone}).toLocal();
+if(!dt.isValid){return;}
+var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';
+var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',datetime12:'%Y-%m-%d %I:%M %p',full:'%A, %-d %B %Y at %H:%M %Z',full12:'%A, %-d %B %Y at %I:%M %p %Z'};
+if(P[fmt])fmt=P[fmt];
+var pad=function(n){return String(n).padStart(2,'0');};
+var h=dt.hour,mi=dt.minute;
+el.textContent=fmt
+  .replace(/%Y/g,String(dt.year))
+  .replace(/%-m/g,String(dt.month)).replace(/%m/g,pad(dt.month))
+  .replace(/%-d/g,String(dt.day)).replace(/%d/g,pad(dt.day))
+  .replace(/%-H/g,String(h)).replace(/%H/g,pad(h))
+  .replace(/%-I/g,String(h%12||12)).replace(/%I/g,pad(h%12||12))
+  .replace(/%-M/g,String(mi)).replace(/%M/g,pad(mi))
+  .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
+  .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
+  .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
+  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
 </tr>
 <tr class="even">
 <td><code>{{&lt; localtime 2026-01-15 09:00 EST &gt;}}</code></td>
-<td><p><span id="localtime-20" class="localtime" data-utc="2026-01-15T14:00:00Z" data-format="">2026-01-15 09:00 EST</span><script>
-(function(){var el=document.getElementById('localtime-20');var d=new Date(el.getAttribute('data-utc'));var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',full:'%A, %d %B %Y at %H:%M %Z'};if(P[fmt])fmt=P[fmt];function pad(n){return String(n).padStart(2,'0');}var y=d.getFullYear(),mo=d.getMonth()+1,dy=d.getDate(),h=d.getHours(),mi=d.getMinutes(),h12=h%12||12,ap=h<12?'AM':'PM';var tzPart=Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(d).find(function(p){return p.type==='timeZoneName';});var tz=tzPart?tzPart.value:'';el.textContent=fmt.replace(/%Y/g,y).replace(/%m/g,pad(mo)).replace(/%d/g,pad(dy)).replace(/%H/g,pad(h)).replace(/%I/g,pad(h12)).replace(/%M/g,pad(mi)).replace(/%p/g,ap).replace(/%B/g,new Intl.DateTimeFormat(undefined,{month:'long'}).format(d)).replace(/%b/g,new Intl.DateTimeFormat(undefined,{month:'short'}).format(d)).replace(/%A/g,new Intl.DateTimeFormat(undefined,{weekday:'long'}).format(d)).replace(/%a/g,new Intl.DateTimeFormat(undefined,{weekday:'short'}).format(d)).replace(/%Z/g,tz);})();
-</script></p></td>
+<td><p><span id="localtime-37" class="localtime" data-datetime="2026-01-15T09:00" data-tz="America/New_York" data-format="">2026-01-15 09:00 EST</span><script>(function(){var el=document.getElementById('localtime-37');
+if(typeof luxon==='undefined'){return;}
+var tz=el.getAttribute('data-tz');
+var zone=isNaN(Number(tz))?tz:Number(tz);
+var dt=luxon.DateTime.fromISO(el.getAttribute('data-datetime'),{zone:zone}).toLocal();
+if(!dt.isValid){return;}
+var fmt=el.getAttribute('data-format')||'%Y-%m-%d %H:%M';
+var P={datetime:'%Y-%m-%d %H:%M',date:'%Y-%m-%d',time:'%H:%M',time12:'%I:%M %p',datetime12:'%Y-%m-%d %I:%M %p',full:'%A, %-d %B %Y at %H:%M %Z',full12:'%A, %-d %B %Y at %I:%M %p %Z'};
+if(P[fmt])fmt=P[fmt];
+var pad=function(n){return String(n).padStart(2,'0');};
+var h=dt.hour,mi=dt.minute;
+el.textContent=fmt
+  .replace(/%Y/g,String(dt.year))
+  .replace(/%-m/g,String(dt.month)).replace(/%m/g,pad(dt.month))
+  .replace(/%-d/g,String(dt.day)).replace(/%d/g,pad(dt.day))
+  .replace(/%-H/g,String(h)).replace(/%H/g,pad(h))
+  .replace(/%-I/g,String(h%12||12)).replace(/%I/g,pad(h%12||12))
+  .replace(/%-M/g,String(mi)).replace(/%M/g,pad(mi))
+  .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
+  .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
+  .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
+  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
 </tr>
 </tbody>
 </table>
+<p>The July and January rows for the same abbreviation use different offsets (e.g.&nbsp;CEST vs CET, EDT vs EST) because the browser’s timezone database applies the correct rule for each date.</p>
 </section>
 
 </main>
