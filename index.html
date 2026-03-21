@@ -102,7 +102,7 @@ el.textContent=fmt
   .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
   .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
   .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
-  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
+  .replace(/%Z/g,(Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(dt.toJSDate()).find(function(p){return p.type==='timeZoneName';})||{value:''}).value);})();</script></p></td>
 </tr>
 <tr class="even">
 <td><code>{{&lt; localtime 2026-01-30 13:00 EST &gt;}}</code></td>
@@ -127,7 +127,7 @@ el.textContent=fmt
   .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
   .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
   .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
-  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
+  .replace(/%Z/g,(Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(dt.toJSDate()).find(function(p){return p.type==='timeZoneName';})||{value:''}).value);})();</script></p></td>
 </tr>
 <tr class="odd">
 <td><code>{{&lt; localtime 2026-03-12 13:00 EST &gt;}}</code></td>
@@ -152,7 +152,7 @@ el.textContent=fmt
   .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
   .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
   .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
-  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
+  .replace(/%Z/g,(Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(dt.toJSDate()).find(function(p){return p.type==='timeZoneName';})||{value:''}).value);})();</script></p></td>
 </tr>
 <tr class="even">
 <td><code>{{&lt; localtime 2026-07-30 13:00 EST &gt;}}</code></td>
@@ -177,7 +177,7 @@ el.textContent=fmt
   .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
   .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
   .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
-  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
+  .replace(/%Z/g,(Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(dt.toJSDate()).find(function(p){return p.type==='timeZoneName';})||{value:''}).value);})();</script></p></td>
 </tr>
 <tr class="odd">
 <td><code>{{&lt; localtime 2026-01-30 09:00 CET &gt;}}</code></td>
@@ -202,7 +202,7 @@ el.textContent=fmt
   .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
   .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
   .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
-  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
+  .replace(/%Z/g,(Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(dt.toJSDate()).find(function(p){return p.type==='timeZoneName';})||{value:''}).value);})();</script></p></td>
 </tr>
 <tr class="even">
 <td><code>{{&lt; localtime 2026-01-30 13:00 -05:00 &gt;}}</code></td>
@@ -227,7 +227,7 @@ el.textContent=fmt
   .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
   .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
   .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
-  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
+  .replace(/%Z/g,(Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(dt.toJSDate()).find(function(p){return p.type==='timeZoneName';})||{value:''}).value);})();</script></p></td>
 </tr>
 <tr class="odd">
 <td><code>{{&lt; localtime 2026-06-15 09:00 UTC &gt;}}</code></td>
@@ -252,7 +252,7 @@ el.textContent=fmt
   .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
   .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
   .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
-  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
+  .replace(/%Z/g,(Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(dt.toJSDate()).find(function(p){return p.type==='timeZoneName';})||{value:''}).value);})();</script></p></td>
 </tr>
 <tr class="even">
 <td><code>{{&lt; localtime 2026-01-30 13:00 UTC format="full" &gt;}}</code></td>
@@ -277,7 +277,7 @@ el.textContent=fmt
   .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
   .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
   .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
-  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
+  .replace(/%Z/g,(Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(dt.toJSDate()).find(function(p){return p.type==='timeZoneName';})||{value:''}).value);})();</script></p></td>
 </tr>
 <tr class="odd">
 <td><code>{{&lt; localtime 2026-01-30 13:00 UTC format="%d %B at %H:%M" &gt;}}</code></td>
@@ -302,7 +302,7 @@ el.textContent=fmt
   .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
   .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
   .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
-  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
+  .replace(/%Z/g,(Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(dt.toJSDate()).find(function(p){return p.type==='timeZoneName';})||{value:''}).value);})();</script></p></td>
 </tr>
 </tbody>
 </table>
@@ -344,7 +344,7 @@ el.textContent=fmt
   .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
   .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
   .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
-  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
+  .replace(/%Z/g,(Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(dt.toJSDate()).find(function(p){return p.type==='timeZoneName';})||{value:''}).value);})();</script></p></td>
 </tr>
 <tr class="even">
 <td><code>{{&lt; localtime 2026-01-30 1:00 PM EST &gt;}}</code></td>
@@ -369,7 +369,7 @@ el.textContent=fmt
   .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
   .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
   .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
-  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
+  .replace(/%Z/g,(Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(dt.toJSDate()).find(function(p){return p.type==='timeZoneName';})||{value:''}).value);})();</script></p></td>
 </tr>
 <tr class="odd">
 <td><code>{{&lt; localtime 2026-01-30 12:00am UTC &gt;}}</code></td>
@@ -394,7 +394,7 @@ el.textContent=fmt
   .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
   .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
   .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
-  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
+  .replace(/%Z/g,(Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(dt.toJSDate()).find(function(p){return p.type==='timeZoneName';})||{value:''}).value);})();</script></p></td>
 </tr>
 <tr class="even">
 <td><code>{{&lt; localtime 2026-01-30 12:00pm UTC &gt;}}</code></td>
@@ -419,7 +419,7 @@ el.textContent=fmt
   .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
   .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
   .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
-  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
+  .replace(/%Z/g,(Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(dt.toJSDate()).find(function(p){return p.type==='timeZoneName';})||{value:''}).value);})();</script></p></td>
 </tr>
 </tbody>
 </table>
@@ -461,7 +461,7 @@ el.textContent=fmt
   .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
   .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
   .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
-  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
+  .replace(/%Z/g,(Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(dt.toJSDate()).find(function(p){return p.type==='timeZoneName';})||{value:''}).value);})();</script></p></td>
 </tr>
 <tr class="even">
 <td><code>{{&lt; localtime 2026-01-30 13:00 UTC format="time" &gt;}}</code></td>
@@ -486,7 +486,7 @@ el.textContent=fmt
   .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
   .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
   .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
-  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
+  .replace(/%Z/g,(Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(dt.toJSDate()).find(function(p){return p.type==='timeZoneName';})||{value:''}).value);})();</script></p></td>
 </tr>
 <tr class="odd">
 <td><code>{{&lt; localtime 2026-01-30 13:00 UTC format="time12" &gt;}}</code></td>
@@ -511,7 +511,7 @@ el.textContent=fmt
   .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
   .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
   .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
-  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
+  .replace(/%Z/g,(Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(dt.toJSDate()).find(function(p){return p.type==='timeZoneName';})||{value:''}).value);})();</script></p></td>
 </tr>
 <tr class="even">
 <td><code>{{&lt; localtime 2026-01-30 13:00 UTC format="datetime" &gt;}}</code></td>
@@ -536,7 +536,7 @@ el.textContent=fmt
   .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
   .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
   .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
-  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
+  .replace(/%Z/g,(Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(dt.toJSDate()).find(function(p){return p.type==='timeZoneName';})||{value:''}).value);})();</script></p></td>
 </tr>
 <tr class="odd">
 <td><code>{{&lt; localtime 2026-01-30 13:00 UTC format="datetime12" &gt;}}</code></td>
@@ -561,7 +561,7 @@ el.textContent=fmt
   .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
   .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
   .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
-  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
+  .replace(/%Z/g,(Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(dt.toJSDate()).find(function(p){return p.type==='timeZoneName';})||{value:''}).value);})();</script></p></td>
 </tr>
 <tr class="even">
 <td><code>{{&lt; localtime 2026-01-30 13:00 UTC format="full" &gt;}}</code></td>
@@ -586,7 +586,7 @@ el.textContent=fmt
   .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
   .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
   .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
-  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
+  .replace(/%Z/g,(Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(dt.toJSDate()).find(function(p){return p.type==='timeZoneName';})||{value:''}).value);})();</script></p></td>
 </tr>
 <tr class="odd">
 <td><code>{{&lt; localtime 2026-01-30 13:00 UTC format="full12" &gt;}}</code></td>
@@ -611,7 +611,7 @@ el.textContent=fmt
   .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
   .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
   .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
-  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
+  .replace(/%Z/g,(Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(dt.toJSDate()).find(function(p){return p.type==='timeZoneName';})||{value:''}).value);})();</script></p></td>
 </tr>
 </tbody>
 </table>
@@ -653,7 +653,7 @@ el.textContent=fmt
   .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
   .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
   .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
-  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
+  .replace(/%Z/g,(Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(dt.toJSDate()).find(function(p){return p.type==='timeZoneName';})||{value:''}).value);})();</script></p></td>
 </tr>
 <tr class="even">
 <td><code>{{&lt; localtime 2026-01-30 13:00 UTC format="%d %B %Y" &gt;}}</code></td>
@@ -678,7 +678,7 @@ el.textContent=fmt
   .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
   .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
   .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
-  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
+  .replace(/%Z/g,(Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(dt.toJSDate()).find(function(p){return p.type==='timeZoneName';})||{value:''}).value);})();</script></p></td>
 </tr>
 <tr class="odd">
 <td><code>{{&lt; localtime 2026-01-30 13:00 UTC format="%I:%M %p" &gt;}}</code></td>
@@ -703,7 +703,7 @@ el.textContent=fmt
   .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
   .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
   .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
-  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
+  .replace(/%Z/g,(Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(dt.toJSDate()).find(function(p){return p.type==='timeZoneName';})||{value:''}).value);})();</script></p></td>
 </tr>
 <tr class="even">
 <td><code>{{&lt; localtime 2026-01-30 13:00 UTC format="%I:%M %P" &gt;}}</code></td>
@@ -728,7 +728,7 @@ el.textContent=fmt
   .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
   .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
   .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
-  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
+  .replace(/%Z/g,(Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(dt.toJSDate()).find(function(p){return p.type==='timeZoneName';})||{value:''}).value);})();</script></p></td>
 </tr>
 <tr class="odd">
 <td><code>{{&lt; localtime 2026-01-30 13:00 UTC format="%A, %d %B %Y at %H:%M %Z" &gt;}}</code></td>
@@ -753,7 +753,7 @@ el.textContent=fmt
   .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
   .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
   .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
-  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
+  .replace(/%Z/g,(Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(dt.toJSDate()).find(function(p){return p.type==='timeZoneName';})||{value:''}).value);})();</script></p></td>
 </tr>
 </tbody>
 </table>
@@ -796,7 +796,7 @@ el.textContent=fmt
   .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
   .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
   .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
-  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
+  .replace(/%Z/g,(Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(dt.toJSDate()).find(function(p){return p.type==='timeZoneName';})||{value:''}).value);})();</script></p></td>
 </tr>
 <tr class="even">
 <td><code>{{&lt; localtime 2026-01-03 08:05 UTC format="%-d %B %Y at %-H:%M" &gt;}}</code></td>
@@ -821,7 +821,7 @@ el.textContent=fmt
   .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
   .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
   .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
-  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
+  .replace(/%Z/g,(Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(dt.toJSDate()).find(function(p){return p.type==='timeZoneName';})||{value:''}).value);})();</script></p></td>
 </tr>
 <tr class="odd">
 <td><code>{{&lt; localtime 2026-01-03 08:05 UTC format="%-d %b %Y, %-I:%M %p" &gt;}}</code></td>
@@ -846,7 +846,7 @@ el.textContent=fmt
   .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
   .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
   .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
-  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
+  .replace(/%Z/g,(Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(dt.toJSDate()).find(function(p){return p.type==='timeZoneName';})||{value:''}).value);})();</script></p></td>
 </tr>
 </tbody>
 </table>
@@ -890,7 +890,7 @@ el.textContent=fmt
   .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
   .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
   .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
-  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
+  .replace(/%Z/g,(Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(dt.toJSDate()).find(function(p){return p.type==='timeZoneName';})||{value:''}).value);})();</script></p></td>
 </tr>
 <tr class="even">
 <td><code>{{&lt; localtime 2026-07-15 13:00 America/New_York &gt;}}</code></td>
@@ -915,7 +915,7 @@ el.textContent=fmt
   .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
   .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
   .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
-  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
+  .replace(/%Z/g,(Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(dt.toJSDate()).find(function(p){return p.type==='timeZoneName';})||{value:''}).value);})();</script></p></td>
 </tr>
 <tr class="odd">
 <td><code>{{&lt; localtime 2026-01-30 09:00 Europe/Paris &gt;}}</code></td>
@@ -940,7 +940,7 @@ el.textContent=fmt
   .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
   .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
   .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
-  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
+  .replace(/%Z/g,(Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(dt.toJSDate()).find(function(p){return p.type==='timeZoneName';})||{value:''}).value);})();</script></p></td>
 </tr>
 <tr class="even">
 <td><code>{{&lt; localtime 2026-07-15 09:00 Europe/Paris &gt;}}</code></td>
@@ -965,7 +965,7 @@ el.textContent=fmt
   .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
   .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
   .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
-  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
+  .replace(/%Z/g,(Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(dt.toJSDate()).find(function(p){return p.type==='timeZoneName';})||{value:''}).value);})();</script></p></td>
 </tr>
 <tr class="odd">
 <td><code>{{&lt; localtime 2026-01-30 10:00 Australia/Sydney &gt;}}</code></td>
@@ -990,7 +990,7 @@ el.textContent=fmt
   .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
   .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
   .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
-  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
+  .replace(/%Z/g,(Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(dt.toJSDate()).find(function(p){return p.type==='timeZoneName';})||{value:''}).value);})();</script></p></td>
 </tr>
 </tbody>
 </table>
@@ -1043,7 +1043,7 @@ el.textContent=fmt
   .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
   .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
   .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
-  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
+  .replace(/%Z/g,(Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(dt.toJSDate()).find(function(p){return p.type==='timeZoneName';})||{value:''}).value);})();</script></p></td>
 </tr>
 <tr class="even">
 <td><code>{{&lt; localtime 2026-01-15 14:00 CET &gt;}}</code></td>
@@ -1068,7 +1068,7 @@ el.textContent=fmt
   .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
   .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
   .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
-  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
+  .replace(/%Z/g,(Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(dt.toJSDate()).find(function(p){return p.type==='timeZoneName';})||{value:''}).value);})();</script></p></td>
 </tr>
 <tr class="odd">
 <td><code>{{&lt; localtime 2026-07-15 09:00 EST &gt;}}</code></td>
@@ -1093,7 +1093,7 @@ el.textContent=fmt
   .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
   .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
   .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
-  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
+  .replace(/%Z/g,(Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(dt.toJSDate()).find(function(p){return p.type==='timeZoneName';})||{value:''}).value);})();</script></p></td>
 </tr>
 <tr class="even">
 <td><code>{{&lt; localtime 2026-01-15 09:00 EST &gt;}}</code></td>
@@ -1118,7 +1118,7 @@ el.textContent=fmt
   .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
   .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
   .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
-  .replace(/%Z/g,dt.toFormat('z'));})();</script></p></td>
+  .replace(/%Z/g,(Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(dt.toJSDate()).find(function(p){return p.type==='timeZoneName';})||{value:''}).value);})();</script></p></td>
 </tr>
 </tbody>
 </table>
