@@ -20,6 +20,7 @@ This extension loads [Luxon](https://moment.github.io/luxon/) from the jsDelivr 
 ```
 
 Where:
+
 - `YYYY-MM-DD` is the date
 - `HH:MM` is the time in 24-hour format, **or** `H:MMam` / `H:MM PM` for 12-hour format
   (am/pm is required for 12-hour; if omitted, 24-hour is assumed)
@@ -32,18 +33,16 @@ Where:
 |---|---|
 | `{{< localtime 2026-01-30 13:00 UTC >}}` | `2026-01-30 13:00` (UTC), `2026-01-30 14:00` (CET), `2026-01-30 08:00` (EST) |
 | `{{< localtime 2026-01-30 13:00 EST >}}` | `2026-01-30 18:00` (UTC), `2026-01-30 19:00` (CET), `2026-01-30 13:00` (EST) |
-| `{{< localtime 2026-01-30 1:00pm EST >}}` | same output as `13:00 EST` above |
 | `{{< localtime 2026-01-30 09:00 CET >}}` | `2026-01-30 08:00` (UTC), `2026-01-30 03:00` (EST), `2026-01-30 17:00` (JST) |
 | `{{< localtime 2026-01-30 13:00 -05:00 >}}` | `2026-01-30 18:00` (UTC), `2026-01-30 19:00` (CET), `2026-01-30 10:00` (PST) |
-| `{{< localtime 2026-01-30 13:00 America/New_York >}}` | same output as `13:00 EST` above |
-| `{{< localtime 2026-01-30 13:00 UTC format="full" >}}` | `Friday, 30 January 2026 at 13:00 GMT` (UTC), `Friday, 30 January 2026 at 14:00 CET` (CET), `Friday, 30 January 2026 at 8:00 EST` (EST) |
+| `{{< localtime 2026-01-30 13:00 UTC format="full" >}}` | `Friday, 30 January 2026 at 13:00 GMT` (UTC), `Friday, 30 January 2026 at 14:00 CET` (CET), `Friday, 30 January 2026 at 08:00 EST` (EST) |
 | `{{< localtime 2026-01-30 13:00 UTC format="%d %B at %H:%M" >}}` | `30 January at 13:00` (UTC), `30 January at 14:00` (CET), `30 January at 08:00` (EST) |
 
 The timezone argument describes where the *input* time is, not an offset to apply to it. For example, `{{< localtime 2026-01-30 13:00 EST >}}` means "this event is at 13:00 Eastern time" — so a reader in GMT (UK) sees `2026-01-30 18:00`, because EST is 5 hours behind GMT. Equivalently, `{{< localtime 2026-01-30 13:00 -05:00 >}}` or `{{< localtime 2026-01-30 13:00 America/New_York >}}` produce the same result.
 
 The shortcode renders the time in the reader's local timezone using JavaScript. If JavaScript is disabled, the original time and timezone are shown as a fallback (the `format` argument has no effect in this case — the fallback always shows the full original datetime).
 
-## 12-hour time input
+### 12-hour time input
 
 The time argument can be given in 12-hour format by appending `am` or `pm`.
 `am`/`pm` is **case-insensitive** (`am`, `AM`, `Am` are all accepted) and a space before it is optional:
@@ -112,6 +111,10 @@ The `-` flag removes zero-padding (e.g. `%-H` gives `8` instead of `08`). `%p` g
 ## Supported timezones
 
 Three formats are accepted:
+
+- Common abbreviations
+- [IANA timezone names](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
+- UTC offsets
 
 ### Common abbreviations
 
