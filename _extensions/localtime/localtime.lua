@@ -246,7 +246,7 @@ el.textContent=fmt
   .replace(/%P/g,h<12?'am':'pm').replace(/%p/g,h<12?'AM':'PM')
   .replace(/%A/g,dt.toFormat('EEEE')).replace(/%a/g,dt.toFormat('EEE'))
   .replace(/%B/g,dt.toFormat('MMMM')).replace(/%b/g,dt.toFormat('MMM'))
-  .replace(/%Z/g,dt.toFormat('z'));})();]]
+  .replace(/%Z/g,(Intl.DateTimeFormat(undefined,{timeZoneName:'short'}).formatToParts(dt.toJSDate()).find(function(p){return p.type==='timeZoneName';})||{value:''}).value);})();]]
 
     local html = luxon_tag ..
       '<span id="' .. id .. '" class="localtime"' ..
